@@ -4,13 +4,17 @@ from detection import predict_disease
 from db import add_record, get_records
 from voice_assistant import listen_to_voice
 
-st.set_page_config(page_title="🌾 Farmer AI Assistant", layout="wide")
+st.set_page_config(
+    page_title="FarminAI Assistant ",
+    page_icon="assets/logo.png",
+    layout="wide"
+)
 # 🌐 Language Selector
 languages = {"English": "en", "తెలుగు": "te", "हिंदी": "hi"}
 lang = st.sidebar.selectbox("🌐 Language", list(languages.keys()))
 lang_code = languages[lang]
 
-st.title("🤖 Farmer & Dairy AI Assistant")
+st.image("assests/logo.png",width = 100)
 st.write("Your offline assistant for Agriculture, Dairy, and Poultry.")
 
 # 🗣️ Voice Command
@@ -37,9 +41,8 @@ st.subheader("📒 Farm Record Keeping")
 record_type = st.selectbox("Type", ["Dairy", "Poultry", "Crop"])
 detail = st.text_input("Details")
 if st.button("💾 Save Record"):
-    add_record(record_type, detail, "2025-07-16")
+    add_record(record_type, detail, "2025-07-17")
     st.success("Record saved!")
 if st.checkbox("📜 Show Records"):
     records = get_records()
     st.table(records)
-
