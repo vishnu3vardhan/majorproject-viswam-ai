@@ -20,9 +20,6 @@
 
 ---
 
-## 🖥️ Live Demo (Optional)
-
-> ⚠️ Coming soon! Deploy your app using [Streamlit Cloud](https://streamlit.io/cloud) or [Render](https://render.com/) and paste the link here.
 
 ---
 
