@@ -1,0 +1,42 @@
+# 📦 Changelog
+
+All notable changes to **FarminAI Assistant** will be documented in this file.
+
+This project adheres to [Semantic Versioning](https://semver.org/).
+
+---
+
+## [1.0.0] - 2025-07-23
+
+### 🎉 Initial Release
+
+- ✅ Streamlit app structure created
+- ✅ Sidebar navigation with:
+  - Home
+  - Disease Detection
+    - Poultry
+    - Cow
+    - Crop
+  - Farm Record Keeping
+- ✅ Modularized code using `pages/` directory
+- ✅ Added logo image and basic UI layout
+- ✅ Set wide layout for full-width experience
+
+---
+
+## [Unreleased]
+
+### 🚧 Upcoming Features
+
+- 🧠 Integrate AI/ML models for:
+  - Image-based crop disease detection
+  - Audio or visual poultry/cow disease classification
+- 💾 Implement persistent farm record saving (CSV or database)
+- ☁️ Deploy app to Streamlit Cloud / Hugging Face Spaces
+- 🧪 Add unit tests and mock data for simulation
+- 🎨 Improve UI with custom themes and responsive design
+- 🧭 Add GPS or weather-based suggestions (future enhancement)
+
+---
+
+> Created with ❤️ by the FarminAI team
