@@ -59,67 +59,65 @@ FarminAI addresses these challenges by providing an interactive, AI-driven, easy
 │  ├── record_keeping.py
 │  └── disease_detection.py
 └────────────┘
+```
 
-🏗️ 5. Implementation
-5.1 Navigation
-Sidebar-driven navigation using st.radio() between:
 
-Home
+## 🏗️ 5. Implementation
 
-Disease Detection (with Poultry, Cow, Crop options)
+### 5.1 Navigation
+Sidebar-driven navigation using `st.radio()` between:
 
-Farm Record Keeping
+- **Home**
+- **Disease Detection** (with Poultry, Cow, Crop options)
+- **Farm Record Keeping**
 
-5.2 Disease Detection (Stub Functions)
+### 5.2 Disease Detection (Stub Functions)
 Placeholder functions for:
 
-poultry_disease_detection()
-
-cow_disease_detection()
-
-crop_disease_detection()
+- `poultry_disease_detection()`
+- `cow_disease_detection()`
+- `crop_disease_detection()`
 
 These will be connected to image/audio classification models in future iterations.
 
-5.3 Record Keeping
+### 5.3 Record Keeping
 Page to allow users to input and save farm data (to be developed with persistent storage in future).
 
-📊 6. Results (Prototype Stage)
-✅ Functional dashboard navigation
+---
 
-✅ Modular architecture ready for AI model integration
+## 📊 6. Results (Prototype Stage)
 
-✅ UI/UX optimized for wide layout (layout="wide")
+- ✅ Functional dashboard navigation
+- ✅ Modular architecture ready for AI model integration
+- ✅ UI/UX optimized for wide layout (`layout="wide"`)
+- 🟡 Disease detection and record-keeping logic in planning/development
+- 🟢 Clear code separation and maintainability for scaling
 
-🟡 Disease detection and record-keeping logic in planning/development
+---
 
-🟢 Clear code separation and maintainability for scaling
+## 📈 7. Future Enhancements
 
-📈 7. Future Enhancements
-🧠 Train and integrate ML models for:
+- 🧠 Train and integrate ML models for:
+    - Image-based crop disease identification
+    - Sound/image-based animal disease recognition
+- ☁️ Cloud deployment (Streamlit Cloud / Hugging Face Spaces)
+- 💾 Persistent storage (SQLite / Firebase / Supabase)
+- 🔔 Real-time alerts and notifications
+- 🌐 Multilingual support for wider accessibility
+- 📱 Mobile-friendly or PWA support
 
-Image-based crop disease identification
+---
 
-Sound/image-based animal disease recognition
+## 📚 8. References
 
-☁️ Cloud deployment (Streamlit Cloud / Hugging Face Spaces)
+- Streamlit Docs
+- PEP8 Python Guidelines
+- OpenCV Documentation
 
-💾 Persistent storage (SQLite / Firebase / Supabase)
+---
 
-🔔 Real-time alerts and notifications
+## ✅ 9. Conclusion
 
-🌐 Multilingual support for wider accessibility
-
-📱 Mobile-friendly or PWA support
-
-📚 8. References
-Streamlit Docs
-
-PEP8 Python Guidelines
-
-OpenCV Documentation
-
-✅ 9. Conclusion
 FarminAI Assistant provides the foundation for an accessible, AI-powered platform tailored to agriculture. With further enhancements, it can become a full-fledged decision support system for farmers around the world.
 
 🧑‍🌾 Built to support sustainable farming with technology.
