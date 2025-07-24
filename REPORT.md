@@ -108,11 +108,29 @@ Page to allow users to input and save farm data (to be developed with persistent
 
 ---
 
-## 📚 8. References
+## 🚀 8. User Acquisition Strategy
 
-- Streamlit Docs
-- PEP8 Python Guidelines
-- OpenCV Documentation
+To drive adoption of **FarminAI Assistant** among farmers, the following strategies will be employed:
+
+## 📌 Community Outreach
+Partner with local cooperatives, NGOs, and agricultural officers to demonstrate the tool in rural areas.
+
+## 📱 Mobile-First Promotion
+Use WhatsApp, SMS, and regional language content to increase reach and accessibility.
+
+## 🏛️ Institutional Support
+Collaborate with agricultural universities and government bodies for endorsement and integration into existing programs.
+
+## 🎁 Referral Incentives
+Offer simple rewards for user referrals and share success stories to build trust.
+
+## 🌐 Online Visibility
+Maintain a lightweight landing page and promote via social media platforms popular in farming communities.
+
+---
+
+This approach combines **offline engagement** with **digital outreach** to ensure wide and effective user adoption.
+
 
 ---
 
