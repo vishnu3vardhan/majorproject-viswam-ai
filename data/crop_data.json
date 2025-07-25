@@ -1,0 +1,122 @@
+[
+  {
+    "crop": "Watermelon",
+    "season": "Summer",
+    "weather": "Hot",
+    "soil": "Sandy loam soil with good drainage",
+    "duration": "90-100 days",
+    "investment": "₹20,000 - ₹30,000 per acre",
+    "profit": "₹60,000 - ₹90,000 per acre",
+    "how_to_start": "Select a sunny location. Use raised beds. Sow seeds directly and irrigate regularly. Avoid overwatering."
+  },
+  {
+    "crop": "Maize",
+    "season": "Summer",
+    "weather": "Hot",
+    "soil": "Well-drained loamy soil",
+    "duration": "90-110 days",
+    "investment": "₹18,000 - ₹25,000 per acre",
+    "profit": "₹45,000 - ₹70,000 per acre",
+    "how_to_start": "Prepare fine-tilled land. Use hybrid seeds. Apply fertilizers and irrigate. Harvest when cob husks turn brown."
+  },
+  {
+    "crop": "Sunflower",
+    "season": "Summer",
+    "weather": "Warm",
+    "soil": "Loamy soil with good fertility",
+    "duration": "85-95 days",
+    "investment": "₹15,000 - ₹22,000 per acre",
+    "profit": "₹40,000 - ₹65,000 per acre",
+    "how_to_start": "Sow seeds directly in rows. Thin seedlings. Apply nitrogen and potassium. Irrigate during flowering and seed formation."
+  },
+  {
+    "crop": "Wheat",
+    "season": "Winter",
+    "weather": "Cool",
+    "soil": "Well-drained loamy or clay loam soil",
+    "duration": "120-150 days",
+    "investment": "₹15,000 - ₹25,000 per acre",
+    "profit": "₹45,000 - ₹70,000 per acre",
+    "how_to_start": "Plough the land, use certified seeds, apply basal fertilizers, and ensure proper irrigation. Harvest at maturity."
+  },
+  {
+    "crop": "Mustard",
+    "season": "Winter",
+    "weather": "Cool",
+    "soil": "Loamy to sandy loam soil",
+    "duration": "100-110 days",
+    "investment": "₹12,000 - ₹20,000 per acre",
+    "profit": "₹35,000 - ₹55,000 per acre",
+    "how_to_start": "Sow in cool season. Irrigate twice. Use organic manure. Harvest when pods are dry and yellow."
+  },
+  {
+    "crop": "Peas",
+    "season": "Winter",
+    "weather": "Cold",
+    "soil": "Well-drained loamy soil rich in organic matter",
+    "duration": "75-90 days",
+    "investment": "₹10,000 - ₹18,000 per acre",
+    "profit": "₹30,000 - ₹50,000 per acre",
+    "how_to_start": "Sow seeds directly. Provide support for climbing varieties. Harvest young pods every few days."
+  },
+  {
+    "crop": "Rice",
+    "season": "Monsoon",
+    "weather": "Humid",
+    "soil": "Clayey or silty loam soil that retains water",
+    "duration": "100-150 days",
+    "investment": "₹25,000 - ₹40,000 per acre",
+    "profit": "₹50,000 - ₹85,000 per acre",
+    "how_to_start": "Prepare nursery, transplant into puddled field, irrigate regularly, and apply nitrogen-rich fertilizers."
+  },
+  {
+    "crop": "Soybean",
+    "season": "Monsoon",
+    "weather": "Humid",
+    "soil": "Well-drained black soil",
+    "duration": "90-110 days",
+    "investment": "₹20,000 - ₹28,000 per acre",
+    "profit": "₹50,000 - ₹75,000 per acre",
+    "how_to_start": "Sow before monsoon. Use treated seeds. Weed regularly. Harvest when pods turn brown and dry."
+  },
+  {
+    "crop": "Cotton",
+    "season": "Monsoon",
+    "weather": "Warm and humid",
+    "soil": "Black cotton soil or sandy loam",
+    "duration": "150-180 days",
+    "investment": "₹30,000 - ₹45,000 per acre",
+    "profit": "₹70,000 - ₹1,00,000 per acre",
+    "how_to_start": "Use high-yield BT cotton seeds. Provide timely irrigation. Control pests. Harvest after boll opening."
+  },
+  {
+    "crop": "Sorghum (Jowar)",
+    "season": "Monsoon",
+    "weather": "Hot and semi-arid",
+    "soil": "Light to medium loam soil",
+    "duration": "100-120 days",
+    "investment": "₹12,000 - ₹20,000 per acre",
+    "profit": "₹35,000 - ₹55,000 per acre",
+    "how_to_start": "Sow seeds directly in rows. Use minimal irrigation. Ideal for drought-prone areas. Harvest when grains harden."
+  },
+  {
+    "crop": "Cucumber",
+    "season": "Summer",
+    "weather": "Hot",
+    "soil": "Loamy soil with good drainage",
+    "duration": "60-75 days",
+    "investment": "₹15,000 - ₹22,000 per acre",
+    "profit": "₹50,000 - ₹80,000 per acre",
+    "how_to_start": "Direct sowing on raised beds. Maintain moisture. Provide trellis support. Harvest young fruits regularly."
+  },
+  {
+    "crop": "Barley",
+    "season": "Winter",
+    "weather": "Cold",
+    "soil": "Fertile loamy soil with good drainage",
+    "duration": "120-130 days",
+    "investment": "₹13,000 - ₹20,000 per acre",
+    "profit": "₹40,000 - ₹60,000 per acre",
+    "how_to_start": "Plough the field deeply. Use quality seeds. Apply compost and fertilizers. Harvest when spikes turn golden."
+  }
+]
