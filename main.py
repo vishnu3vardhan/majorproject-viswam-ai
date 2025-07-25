@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 from pages import home, record_keeping, disease_detection
+from pages import weather_crop_planner
 
 # Set page config
 st.set_page_config(page_title="FarminAI Assistant", page_icon="assests/logo.png", layout="wide")
@@ -15,7 +16,8 @@ page = st.sidebar.radio("Go to", (
     "Disease Detection",
     "Farm Record Keeping",
     "Profit Calculator",
-    "Crop Suggestion"
+    "Crop Suggestion",
+    "Weather-Based Crop Planning"
 ))
 
 # Page Routing
@@ -35,6 +37,9 @@ elif page == "Disease Detection":
 
 elif page == "Farm Record Keeping":
     record_keeping.show()
+
+elif page == "Weather-Based Crop Planning":
+    weather_crop_planner.show()
 
 elif page == "Profit Calculator":
     st.title("🌾 Crop Profit Calculator")
