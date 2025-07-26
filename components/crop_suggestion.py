@@ -3,7 +3,17 @@ import json
 from components.translator import translate_text
 
 def show(dest_lang='en'):
-    st.title(translate_text("🌿 Crop Suggestion Based on Season", dest_lang))
+    st.markdown(
+        f"""
+        <div style='text-align: center; padding-bottom: 10px;'>
+            <h2 style='color:#2E7D32;'>{translate_text("🌿 Crop Suggestion Based on Season", dest_lang)}</h2>
+            <p style='color: gray;'>{translate_text("Enter the season to get crop suggestions that match weather, soil, and duration.", dest_lang)}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
 
     try:
         with open("data/crop_data.json", "r", encoding="utf-8") as f:
@@ -24,18 +34,34 @@ def show(dest_lang='en'):
         ]
 
         if matching_crops:
+            st.success(
+                f"✅ {translate_text('Found', dest_lang)} {len(matching_crops)} {translate_text('crop(s) for the season', dest_lang)}: {season_input.title()}"
+            )
+            st.markdown("")
+
             for crop in matching_crops:
-                st.subheader(translate_text("🌾 Suggested Crop:", dest_lang) + f" {translate_text(crop['crop'], dest_lang)}")
-                st.markdown(f"""
-                - **{translate_text('Season', dest_lang)}:** {translate_text(crop['season'], dest_lang)}
-                - **{translate_text('Weather Condition', dest_lang)}:** {translate_text(crop['weather'], dest_lang)}
-                - **{translate_text('Soil Type', dest_lang)}:** {translate_text(crop['soil'], dest_lang)}
-                - **{translate_text('Duration', dest_lang)}:** {translate_text(crop['duration'], dest_lang)}
-                - **{translate_text('Investment', dest_lang)}:** {translate_text(crop['investment'], dest_lang)}
-                - **{translate_text('Expected Profit', dest_lang)}:** {translate_text(crop['profit'], dest_lang)}
-                - **{translate_text('How to Start', dest_lang)}:** {translate_text(crop['how_to_start'], dest_lang)}
-                """)
+                st.markdown(
+                    f"""
+                    <div style="border: 1px solid #444; padding: 15px; border-radius: 10px; background-color: #1e1e1e; color: #f0f0f0; margin-bottom: 20px;">
+                        <h4 style="color: #81c784;">🌾 {translate_text(crop['crop'], dest_lang)}</h4>
+                        <ul style="padding-left: 20px; line-height: 1.6;">
+                            <li><strong>{translate_text("Season", dest_lang)}:</strong> {translate_text(crop['season'], dest_lang)}</li>
+                            <li><strong>{translate_text("Weather Condition", dest_lang)}:</strong> {translate_text(crop['weather'], dest_lang)}</li>
+                            <li><strong>{translate_text("Soil Type", dest_lang)}:</strong> {translate_text(crop['soil'], dest_lang)}</li>
+                            <li><strong>{translate_text("Duration", dest_lang)}:</strong> {translate_text(crop['duration'], dest_lang)}</li>
+                            <li><strong>{translate_text("Investment", dest_lang)}:</strong> {translate_text(crop['investment'], dest_lang)}</li>
+                            <li><strong>{translate_text("Expected Profit", dest_lang)}:</strong> {translate_text(crop['profit'], dest_lang)}</li>
+                            <li><strong>{translate_text("How to Start", dest_lang)}:</strong> {translate_text(crop['how_to_start'], dest_lang)}</li>
+                        </ul>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
         else:
-            st.warning(translate_text("⚠ No crop suggestions found for season:", dest_lang) + f" {season_input}")
+            st.warning(
+                f"⚠ {translate_text('No crop suggestions found for season', dest_lang)}: {season_input.title()}"
+            )
     else:
         st.info(translate_text("Please enter a season to get crop suggestions.", dest_lang))
+
+    st.markdown("<br>", unsafe_allow_html=True)

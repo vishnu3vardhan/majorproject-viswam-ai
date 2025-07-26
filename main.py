@@ -10,47 +10,60 @@ from components import (
 from components.translator import translate_text
 
 # Page Config
-st.set_page_config(page_title="FarminAI Assistant", page_icon="assests/logo.png", layout="wide")
+st.set_page_config(page_title="Farmin-A.I Assistant", page_icon="assests/favicon.png", layout="wide")
 
-# Sidebar Branding
-st.sidebar.image("assests/logo.png", width=120)
-st.sidebar.title("🚜 FarminAI Navigation")
+# ---- Sidebar Styling ----
+with st.sidebar:
+    st.image("assests/logo.png", width=180)
+    #st.markdown("<h3 style='text-align: left;'>🚜 Farmin-A.I Assistant</h3>", unsafe_allow_html=True)
+    #st.markdown("---")
 
-# Language Toggle
-lang = st.sidebar.selectbox("🌐 Language", ("English", "Telugu"))
-dest_lang = "te" if lang == "Telugu" else "en"
+    # Language Toggle
+    lang = st.selectbox("🌐 Choose Language", ["English", "తెలుగు"])
+    dest_lang = "te" if "తెలుగు" in lang else "en"
 
-# Simple Translator Shortcut
-def t(text):
-    return translate_text(text, dest_lang)
+    # Translation helper
+    def t(text):
+        try:
+            return translate_text(text, dest_lang)
+        except:
+            return text  # Fallback in case of translation error
 
-# Internal page keys
+# ---- Navigation ----
 pages = [
     "Home",
-    "Disease Detection",
-    "Farm Record Keeping",
-    "Profit Calculator",
     "Crop Suggestion",
-    "Weather-Based Crop Planning"
+    "Weather-Based Crop Planning",
+    "Disease Detection",
+    "Profit Calculator",
+    "Farm Record Keeping"
 ]
 
-# Translated labels to show in sidebar
 translated_labels = [t(page) for page in pages]
-
-# Display translated names but store the index
-selected_label = st.sidebar.radio(t("Go to"), translated_labels)
+selected_label = st.sidebar.radio("📌 " + t("Go to"), translated_labels)
 selected_page = pages[translated_labels.index(selected_label)]
 
-# Route to the selected page
-if selected_page == "Home":
-    home.show(dest_lang)
-elif selected_page == "Disease Detection":
-    disease_detection.show(dest_lang)
-elif selected_page == "Farm Record Keeping":
-    record_keeping.show(dest_lang)
-elif selected_page == "Profit Calculator":
-    profit_calculator.show(dest_lang)
-elif selected_page == "Crop Suggestion":
-    crop_suggestion.show(dest_lang)
-elif selected_page == "Weather-Based Crop Planning":
-    weather_crop_planner.show(dest_lang)
+
+# ---- Page Routing ----
+with st.spinner(t("Loading...")):
+    if selected_page == "Home":
+        home.show(dest_lang)
+    elif selected_page == "Disease Detection":
+        disease_detection.show(dest_lang)
+    elif selected_page == "Farm Record Keeping":
+        record_keeping.show(dest_lang)
+    elif selected_page == "Profit Calculator":
+        profit_calculator.show(dest_lang)
+    elif selected_page == "Crop Suggestion":
+        crop_suggestion.show(dest_lang)
+    elif selected_page == "Weather-Based Crop Planning":
+        weather_crop_planner.show(dest_lang)
+
+# ---- Footer ----
+st.markdown("---")
+st.markdown(
+    "<div style='text-align: center; color: gray;'>"
+    "© 2025 Farmin-A.I Assistant | Built for smarter farming 🌾"
+    "</div>",
+    unsafe_allow_html=True
+)

@@ -3,11 +3,23 @@ import json
 from components.translator import translate_text
 
 def show(dest_lang='en'):
-    st.title(translate_text("🌦️ Weather-Based Crop Planning (Offline Mode)", dest_lang))
+    # Stylized title
+    st.markdown(
+        f"""
+        <div style='text-align: center; padding-bottom: 10px;'>
+            <h2 style='color:#00796B;'>{translate_text("🌦️ Weather-Based Crop Planning", dest_lang)}</h2>
+            <p style='color: gray;'>{translate_text("Plan your crops smartly with recent weather trends.", dest_lang)}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    # City input
+    st.markdown("---")
+
+    # District input
     city = st.text_input(
-        translate_text("🏙️ Enter your district (e.g., Hyderabad, Warangal, Nizamabad)", dest_lang)
+        translate_text("🏙️ Enter your district (e.g., Hyderabad, Warangal, Nizamabad)", dest_lang),
+        placeholder=translate_text("Type a district name...", dest_lang)
     ).strip().lower()
 
     if not city:
@@ -23,27 +35,43 @@ def show(dest_lang='en'):
         return
 
     if city not in all_data:
-        st.warning(translate_text("⚠️ No data available for", dest_lang) + f" '{city.title()}'. " +
-                   translate_text("Try: Hyderabad, Warangal, Nizamabad, etc.", dest_lang))
+        st.warning(
+            f"⚠️ {translate_text('No data available for', dest_lang)} '{city.title()}'.<br>"
+            f"{translate_text('Try: Hyderabad, Warangal, Nizamabad, etc.', dest_lang)}",
+            unsafe_allow_html=True
+        )
         return
 
     forecast = all_data[city]['list'][:5]
 
-    st.subheader(translate_text("📊 Recent Weather in", dest_lang) + f" {city.title()}")
-    for block in forecast:
-        temp = block['main']['temp']
-        humidity = block['main']['humidity']
-        weather = block['weather'][0]['description']
-        st.write(f"🌡️ {translate_text('Temp', dest_lang)}: {temp}°C, "
-                 f"💧 {translate_text('Humidity', dest_lang)}: {humidity}%, "
-                 f"🌤️ {translate_text('Condition', dest_lang)}: {translate_text(weather, dest_lang)}")
+    st.markdown("### 🌤️ " + translate_text("Recent Weather Overview", dest_lang) + f" - {city.title()}")
+    with st.container():
+        for block in forecast:
+            temp = block['main']['temp']
+            humidity = block['main']['humidity']
+            weather = block['weather'][0]['description']
+            st.markdown(
+                f"""
+                <div style='background-color: #1e1e1e; padding: 10px; border-radius: 10px; margin-bottom: 10px;'>
+                    🌡️ <b>{translate_text('Temperature', dest_lang)}:</b> {temp}°C &nbsp;&nbsp;
+                    💧 <b>{translate_text('Humidity', dest_lang)}:</b> {humidity}% &nbsp;&nbsp;
+                    🌤️ <b>{translate_text('Condition', dest_lang)}:</b> {translate_text(weather, dest_lang)}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
     avg_temp = sum([block['main']['temp'] for block in forecast]) / len(forecast)
 
-    st.subheader(translate_text("🌿 Crop Suggestions Based on Temperature", dest_lang))
-    if avg_temp > 30:
-        st.success(translate_text("Recommended Crops:", dest_lang) + " **Millets, Sorghum, Groundnut, Cotton**")
-    elif 20 <= avg_temp <= 30:
-        st.success(translate_text("Recommended Crops:", dest_lang) + " **Rice, Soybean, Sugarcane, Tomato**")
-    else:
-        st.success(translate_text("Recommended Crops:", dest_lang) + " **Wheat, Barley, Mustard, Peas**")
+    st.markdown("### 🌱 " + translate_text("Recommended Crops", dest_lang))
+
+    with st.container():
+        if avg_temp > 30:
+            st.success("**🌞 " + translate_text("Hot Climate", dest_lang) + ":** Millets, Sorghum, Groundnut, Cotton")
+        elif 20 <= avg_temp <= 30:
+            st.success("**🌤️ " + translate_text("Moderate Climate", dest_lang) + ":** Rice, Soybean, Sugarcane, Tomato")
+        else:
+            st.success("**❄️ " + translate_text("Cool Climate", dest_lang) + ":** Wheat, Barley, Mustard, Peas")
+
+    # Footer spacing
+    st.markdown("<br><br>", unsafe_allow_html=True)
