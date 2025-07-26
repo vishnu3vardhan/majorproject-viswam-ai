@@ -8,3 +8,5 @@ opencv-python
 matplotlib
 scikit-learn
 joblib
+SpeechRecognition
+pyaudio ; platform_system != "Windows"
