@@ -1,7 +1,7 @@
 import requests
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "llama2"  # Or "mistral", "gemma", etc.
+MODEL_NAME = "deepseek-r1:1.5b"  # Or "mistral", "gemma", etc.
 
 def get_ai_response(prompt, lang_code="en"):
     if lang_code == "te":
