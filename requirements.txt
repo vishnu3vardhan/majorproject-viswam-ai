@@ -1,7 +1,7 @@
-streamlit
-requests
+streamlit==1.30.0
+requests>=2.25
 pillow
-tensorflow
+tensorflow==2.15.0
 speechrecognition
 pyaudio
 googletrans
