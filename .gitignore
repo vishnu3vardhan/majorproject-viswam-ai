@@ -1,0 +1,20 @@
+# Bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# Streamlit cache and secrets
+.streamlit/secrets.toml
+.streamlit/*.json
+.streamlit/cache/
+
+# OS files
+.DS_Store
+
+# IDE/editor folders
+.vscode/
+.idea/
