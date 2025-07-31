@@ -1,7 +1,7 @@
 streamlit==1.30.0
 requests>=2.25
 pillow
-tensorflow==2.15.0
+tensorflow
 speechrecognition
 googletrans
 plotly
