@@ -1,7 +1,9 @@
-streamlit==1.30.0
+
+streamlit==1.25.0
+tensorflow==2.20.0rc0
+protobuf>=5.28.0
 requests>=2.25
 pillow
-tensorflow
 speechrecognition
 googletrans
 plotly
