@@ -64,13 +64,6 @@ def show(dest_lang='en'):
         else:
             st.warning("❌ " + translate_text("You are at a loss. Try optimizing your farming inputs.", dest_lang))
 
-        # --- Breakdown per Bag ---
-        if num_bags > 0:
-            st.markdown("### 📦 " + translate_text("Per Bag Breakdown", dest_lang))
-            st.write(f"🔹 {translate_text('Cost per Bag', dest_lang)}: ₹ {investment / num_bags:.2f}")
-            st.write(f"🔹 {translate_text('Revenue per Bag', dest_lang)}: ₹ {market_price_per_bag:.2f}")
-            st.write(f"🔹 {translate_text('Profit per Bag', dest_lang)}: ₹ {(market_price_per_bag - (investment / num_bags)):.2f}")
-
         # --- Visualization: Bar Chart ---
         st.markdown("### 📉 " + translate_text("Investment vs Revenue", dest_lang))
         fig = go.Figure(data=[

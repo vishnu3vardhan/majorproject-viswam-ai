@@ -39,6 +39,7 @@ def show(dest_lang='en'):
             )
             st.markdown("")
 
+            # Display matching crops
             for crop in matching_crops:
                 st.markdown(
                     f"""
@@ -57,6 +58,21 @@ def show(dest_lang='en'):
                     """,
                     unsafe_allow_html=True
                 )
+
+            # BEST CROP LOGIC BASED ON PROFIT (Assuming profit is in numbers)
+            def extract_profit(value):
+                try:
+                    return float(''.join(filter(str.isdigit, value)))
+                except:
+                    return 0
+
+            best_crop = max(matching_crops, key=lambda crop: extract_profit(crop['profit']))
+
+            st.markdown("### 🥇 " + translate_text("Best Crop to Cultivate Among These", dest_lang))
+            st.success(
+                f"🌱 **{translate_text(best_crop['crop'], dest_lang)}** - {translate_text('has the highest expected profit among the suggested crops.', dest_lang)}"
+            )
+
         else:
             st.warning(
                 f"⚠ {translate_text('No crop suggestions found for season', dest_lang)}: {season_input.title()}"
