@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+import os
 from components.translator import translate_text  # 👈 translation helper
 
 def show(dest_lang='en'):
@@ -23,69 +24,36 @@ def show(dest_lang='en'):
     card_height = 200
 
     def load_image(path):
+        if not os.path.exists(path):
+            st.warning(f"⚠️ Image not found: `{path}`")
+            return None
         try:
             image = Image.open(path).resize((card_width, card_height))
             return image
         except Exception as e:
-            st.error(f"Error loading {path}: {e}")
+            st.error(f"Error loading image from `{path}`: {e}")
             return None
 
-    # First row of cards
-    cols = st.columns(3)
+    # Card data: (label, image_path, target_page, icon)
+    cards = [
+        ("Crop Suggestion", "assests/crop.jpg", "Crop Suggestion", "🌱"),
+        ("Weather Crop Planner", "assests/weather.jpg", "Weather-Based Crop Planning", "🌤️"),
+        ("Disease Detection", "assests/disease.jpg", "Disease Detection", "🥬"),
+        ("Profit Calculator", "assests/profit.jpg", "Profit Calculator", "💰"),
+        ("Record Keeping", "assests/record.jpg", "Farm Record Keeping", "📒"),
+        ("Voice & Text Assistant", "assests/assistant.jpg", "Voice & Text Assistant", "🎙️")
+    ]
 
-    with cols[0]:
-        img = load_image("assests/crop.jpg")
-        if img: st.image(img, use_container_width=True)
-        st.markdown(f"### 🌱 {t('Crop Suggestion')}", unsafe_allow_html=True)
-        if st.button(t("Open Crop Suggestion")):
-            st.session_state["selected_page"] = "Crop Suggestion"
-            st.session_state["navigated_from_card"] = True
-            st.rerun()
-
-    with cols[1]:
-        img = load_image("assests/weather.jpg")
-        if img: st.image(img, use_container_width=True)
-        st.markdown(f"### 🌤️ {t('Weather Crop Planner')}", unsafe_allow_html=True)
-        if st.button(t("Open Weather Planner")):
-            st.session_state["selected_page"] = "Weather-Based Crop Planning"
-            st.session_state["navigated_from_card"] = True
-            st.rerun()
-
-    with cols[2]:
-        img = load_image("assests/disease.jpg")
-        if img: st.image(img, use_container_width=True)
-        st.markdown(f"### 🥬 {t('Disease Detection')}", unsafe_allow_html=True)
-        if st.button(t("Open Disease Detection")):
-            st.session_state["selected_page"] = "Disease Detection"
-            st.session_state["navigated_from_card"] = True
-            st.rerun()
-
-    # Second row of cards
-    cols2 = st.columns(3)
-
-    with cols2[0]:
-        img = load_image("assests/profit.jpg")
-        if img: st.image(img, use_container_width=True)
-        st.markdown(f"### 💰 {t('Profit Calculator')}", unsafe_allow_html=True)
-        if st.button(t("Open Profit Calculator")):
-            st.session_state["selected_page"] = "Profit Calculator"
-            st.session_state["navigated_from_card"] = True
-            st.rerun()
-
-    with cols2[1]:
-        img = load_image("assests/record.jpg")
-        if img: st.image(img, use_container_width=True)
-        st.markdown(f"### 📒 {t('Record Keeping')}", unsafe_allow_html=True)
-        if st.button(t("Open Record Keeping")):
-            st.session_state["selected_page"] = "Farm Record Keeping"
-            st.session_state["navigated_from_card"] = True
-            st.rerun()
-
-    with cols2[2]:
-        img = load_image("assests/assistant.jpg")
-        if img: st.image(img, use_container_width=True)
-        st.markdown(f"### 🎙️ {t('Voice & Text Assistant')}", unsafe_allow_html=True)
-        if st.button(t("Open Assistant")):
-            st.session_state["selected_page"] = "Voice & Text Assistant"
-            st.session_state["navigated_from_card"] = True
-            st.rerun()
+    # Render cards in 2 rows
+    for i in range(0, len(cards), 3):
+        cols = st.columns(3)
+        for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
+            with col:
+                img = load_image(img_path)
+                if img:
+                    st.image(img, use_container_width=True)
+                st.markdown(f"### {icon} {t(title)}", unsafe_allow_html=True)
+                if st.button(t(f"Open {title}")):
+                    st.session_state["selected_page"] = page
+                    st.session_state["navigated_from_card"] = True
+                    st.rerun()
