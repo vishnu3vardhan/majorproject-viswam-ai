@@ -25,19 +25,26 @@ def show(dest_lang='en'):
     card_width = 300
     card_height = 200
 
-    # Image loader
+    # Improved image loader with more error handling
     def load_image(path):
-        if not os.path.exists(path):
-            st.warning(f"⚠️ Image not found: `{path}`")
-            return None
         try:
-            image = Image.open(path).resize((card_width, card_height))
+            if not os.path.exists(path):
+                # Try alternative path if running in different environment
+                alt_path = os.path.join(os.path.dirname(__file__), path)
+                if not os.path.exists(alt_path):
+                    st.warning(f"⚠️ Image not found: `{path}`")
+                    return None
+                path = alt_path
+            
+            image = Image.open(path)
+            # Maintain aspect ratio while resizing
+            image.thumbnail((card_width, card_height))
             return image
         except Exception as e:
-            st.error(f"Error loading image from `{path}`: {e}")
+            st.error(f"Error loading image from `{path}`: {str(e)}")
             return None
 
-    # ✅ Correct image paths
+    # Card definitions - using relative paths
     cards = [
         ("Crop Suggestion", "assets/crop.jpg", "Crop Suggestion", "🌱"),
         ("Weather Crop Planner", "assets/weather.jpg", "Weather-Based Crop Planning", "🌤️"),
@@ -52,16 +59,20 @@ def show(dest_lang='en'):
         cols = st.columns(3)
         for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
             with col:
-                img = load_image(img_path)
+                # Create container for consistent card sizing
+                with st.container(border=True, height=300):
+                    img = load_image(img_path)
 
-                if isinstance(img, Image.Image):
-                    st.image(img, use_container_width=True)
-                else:
-                    st.warning(f"⚠️ Unable to display image for: {title}")
-                    st.text(f"(Missing image: {img_path})")  # Optional debug line
+                    if img is not None:
+                        st.image(img, use_column_width=True)
+                    else:
+                        # Display placeholder if image fails to load
+                        st.markdown(f"<div style='height:{card_height}px; display:flex; align-items:center; justify-content:center;'>"
+                                    f"<h2>{icon}</h2></div>", unsafe_allow_html=True)
+                        st.warning(t("Image not available"))
 
-                st.markdown(f"### {icon} {t(title)}", unsafe_allow_html=True)
-                if st.button(t(f"Open {title}")):
-                    st.session_state["selected_page"] = page
-                    st.session_state["navigated_from_card"] = True
-                    st.rerun()
+                    st.markdown(f"### {icon} {t(title)}")
+                    if st.button(t(f"Open {title}"), use_container_width=True):
+                        st.session_state["selected_page"] = page
+                        st.session_state["navigated_from_card"] = True
+                        st.rerun()
