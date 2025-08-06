@@ -1,6 +1,6 @@
 import streamlit as st
 from components import (
-    Home,
+    home,
     Assistant,
     record_keeping,
     disease_detection,
