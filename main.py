@@ -15,7 +15,7 @@ st.set_page_config(page_title="Farmin-A.I Assistant", page_icon="assests/favicon
 
 # ---- Sidebar Styling ----
 with st.sidebar:
-    st.image("assests/logo.png", width=180)
+    st.image("assets/logo.png", width=180)
     
     # Language toggle
     lang = st.selectbox("🌐 Choose Language", ["English", "తెలుగు"])
