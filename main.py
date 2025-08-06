@@ -61,7 +61,7 @@ if "navigated_from_card" in st.session_state:
 with st.spinner(t("Loading...")):
     current_page = st.session_state["selected_page"]
     if current_page == "Home":
-        Home.show(dest_lang)
+        home.show(dest_lang)
     elif current_page == "Voice & Text Assistant":
         Assistant.show(dest_lang)
     elif current_page == "Crop Suggestion":
