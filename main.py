@@ -1,6 +1,7 @@
 import streamlit as st
 from components import (
-    home,
+    Home,
+    Assistant,
     record_keeping,
     disease_detection,
     weather_crop_planner,
@@ -15,49 +16,64 @@ st.set_page_config(page_title="Farmin-A.I Assistant", page_icon="assests/favicon
 # ---- Sidebar Styling ----
 with st.sidebar:
     st.image("assests/logo.png", width=180)
-    #st.markdown("<h3 style='text-align: left;'>🚜 Farmin-A.I Assistant</h3>", unsafe_allow_html=True)
-    #st.markdown("---")
-
-    # Language Toggle
+    
+    # Language toggle
     lang = st.selectbox("🌐 Choose Language", ["English", "తెలుగు"])
-    dest_lang = "te" if "తెలుగు" in lang else "en"
+    dest_lang = "te" if lang == "తెలుగు" else "en"
+    st.session_state["selected_lang"] = dest_lang
 
-    # Translation helper
+    # Translator function
     def t(text):
         try:
             return translate_text(text, dest_lang)
         except:
-            return text  # Fallback in case of translation error
+            return text
 
-# ---- Navigation ----
+# ---- Page Labels and Mapping ----
 pages = [
     "Home",
+    "Voice & Text Assistant",
     "Crop Suggestion",
     "Weather-Based Crop Planning",
     "Disease Detection",
     "Profit Calculator",
     "Farm Record Keeping"
 ]
+translated_labels = [t(p) for p in pages]
 
-translated_labels = [t(page) for page in pages]
+# ---- Initialize Session State ----
+if "selected_page" not in st.session_state:
+    st.session_state["selected_page"] = "Home"
+
+# ---- Sidebar Navigation ----
 selected_label = st.sidebar.radio("📌 " + t("Go to"), translated_labels)
-selected_page = pages[translated_labels.index(selected_label)]
+selected_page_from_sidebar = pages[translated_labels.index(selected_label)]
 
+# Sidebar changes should override card clicks
+if "navigated_from_card" not in st.session_state:
+    st.session_state["selected_page"] = selected_page_from_sidebar
+
+# Remove card navigation flag after routing
+if "navigated_from_card" in st.session_state:
+    del st.session_state["navigated_from_card"]
 
 # ---- Page Routing ----
 with st.spinner(t("Loading...")):
-    if selected_page == "Home":
-        home.show(dest_lang)
-    elif selected_page == "Disease Detection":
-        disease_detection.show(dest_lang)
-    elif selected_page == "Farm Record Keeping":
-        record_keeping.show(dest_lang)
-    elif selected_page == "Profit Calculator":
-        profit_calculator.show(dest_lang)
-    elif selected_page == "Crop Suggestion":
+    current_page = st.session_state["selected_page"]
+    if current_page == "Home":
+        Home.show(dest_lang)
+    elif current_page == "Voice & Text Assistant":
+        Assistant.show(dest_lang)
+    elif current_page == "Crop Suggestion":
         crop_suggestion.show(dest_lang)
-    elif selected_page == "Weather-Based Crop Planning":
+    elif current_page == "Weather-Based Crop Planning":
         weather_crop_planner.show(dest_lang)
+    elif current_page == "Disease Detection":
+        disease_detection.show(dest_lang)
+    elif current_page == "Profit Calculator":
+        profit_calculator.show(dest_lang)
+    elif current_page == "Farm Record Keeping":
+        record_keeping.show(dest_lang)
 
 # ---- Footer ----
 st.markdown("---")

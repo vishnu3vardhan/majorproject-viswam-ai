@@ -1,135 +1,91 @@
 import streamlit as st
-import time
-from ollama_backend import get_ai_response
-from voice_assistant import listen_to_voice
-from components.translator import translate_text
+from PIL import Image
+from components.translator import translate_text  # 👈 translation helper
 
-
-# --- Helper: Format conversational history for prompt ---
-def format_conversational_prompt(messages, system_prompt):
-    last_user_message = ""
-    for msg in reversed(messages):
-        if msg["role"] == "user":
-            last_user_message = msg["content"].strip()
-            break
-
-    formatted_prompt = f"{system_prompt.strip()}\n\n"
-    formatted_prompt += f"Answer the following question concisely and directly:\n{last_user_message}\n"
-    return formatted_prompt
-
-
-
-
-# --- Helper: Retry wrapper ---
-def query_with_retry(prompt: str, dest_lang="en", retries=3) -> str:
-    system_prompt = (
-    "You are FarminAi, a helpful and friendly AI assistant for farmers. "
-    "Provide clear, practical, and localized advice on farming-related topics such as crops, soil health, weather, irrigation, "
-    "pest and disease management, government schemes, and market prices. "
-    "Your responses should be brief, easy to understand, and relevant to the farmer's local conditions whenever possible. "
-    "Use simple language, avoid jargon, and always aim to be kind, respectful, and accurate. "
-    "If the user's question lacks detail, ask clarifying questions to provide better help. "
-    "If you don't know something, say so honestly rather than guessing."
-    "Adapt your responses based on regional practices, climate, and crops when such context is available."
-)
-
-    for attempt in range(retries):
-        try:
-            if "messages" not in st.session_state:
-                st.session_state.messages = []
-
-            # Add latest user prompt to history
-            st.session_state.messages.append({"role": "user", "content": prompt})
-
-            # Format prompt
-            formatted_prompt = format_conversational_prompt(
-                st.session_state.messages, system_prompt
-            )
-
-            # Get response from backend
-            response = get_ai_response(formatted_prompt, dest_lang)
-
-            if response:
-                # Clean output (remove accidental echoes or prefixes)
-                cleaned = response.replace("Assistant:", "").replace("User:", "").split("<think>")[-1].strip()
-
-                # Append assistant response to history
-                st.session_state.messages.append({"role": "assistant", "content": cleaned})
-                return cleaned or translate_text("Sorry, I couldn't understand your question.", dest_lang)
-            else:
-                return translate_text("❌ Error: Unable to fetch response. Please try again.", dest_lang)
-
-        except Exception as e:
-            if attempt < retries - 1:
-                time.sleep(2)
-            else:
-                return translate_text(f"❌ Error: Failed after multiple attempts. {e}", dest_lang)
-
-
-# --- MAIN PAGE FUNCTION ---
 def show(dest_lang='en'):
-    # Stylized header
+    def t(text):
+        try:
+            return translate_text(text, dest_lang)
+        except:
+            return text
+
     st.markdown(
         f"""
-        <div style='text-align: center; padding-bottom: 10px;'>
-            <h2 style='color:#2E7D32;'>{translate_text("🌾 Your Smart Assistant for Agriculture", dest_lang)}</h2>
-            <p style='color: gray;'>{translate_text("Ask using voice or text to get instant help.", dest_lang)}</p>
-        </div>
+        <h1 style='text-align: center;'>
+            <img src='https://img.icons8.com/emoji/48/seedling.png' width='35'/>
+            {t("Welcome to")} <strong>Farmin-A.I Assistant</strong>
+        </h1>
         """,
         unsafe_allow_html=True
     )
 
-    st.markdown("---")
+    card_width = 300
+    card_height = 200
 
-    # 🎙️ Voice Assistant (Unchanged)
-    st.markdown(f"### 🎙️ {translate_text('Voice Assistant', dest_lang)}")
-    st.markdown(
-        f"<p style='color: gray;'>{translate_text('Click the mic and ask your farming question.', dest_lang)}</p>",
-        unsafe_allow_html=True
-    )
-
-    mic_clicked = st.button(translate_text("🎤 Start Speaking", dest_lang))
-
-    if mic_clicked:
+    def load_image(path):
         try:
-            query = listen_to_voice()
-            if query:
-                with st.spinner(translate_text("Processing your voice...", dest_lang)):
-                    response = get_ai_response(query, dest_lang)
-                    if response:
-                        st.success(translate_text("Here's the response:", dest_lang))
-                        st.markdown(f"🧠 {translate_text(response, dest_lang)}")
-                    else:
-                        st.error(translate_text("Sorry, I couldn't understand that.", dest_lang))
-            else:
-                st.warning(translate_text("No voice detected. Please try again.", dest_lang))
-        except Exception:
-            st.error(translate_text("Voice assistant failed to start.", dest_lang))
+            image = Image.open(path).resize((card_width, card_height))
+            return image
+        except Exception as e:
+            st.error(f"Error loading {path}: {e}")
+            return None
 
-    st.markdown("---")
+    # First row of cards
+    cols = st.columns(3)
 
-    # ⌨️ Text Assistant (Updated logic only)
-    st.markdown(f"### ⌨️ {translate_text('Text Assistant', dest_lang)}")
-    st.markdown(
-        f"<p style='color: gray;'>{translate_text('Type your question below.', dest_lang)}</p>",
-        unsafe_allow_html=True
-    )
+    with cols[0]:
+        img = load_image("assests/crop.jpg")
+        if img: st.image(img, use_container_width=True)
+        st.markdown(f"### 🌱 {t('Crop Suggestion')}", unsafe_allow_html=True)
+        if st.button(t("Open Crop Suggestion")):
+            st.session_state["selected_page"] = "Crop Suggestion"
+            st.session_state["navigated_from_card"] = True
+            st.rerun()
 
-    # Initialize chat memory
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    with cols[1]:
+        img = load_image("assests/weather.jpg")
+        if img: st.image(img, use_container_width=True)
+        st.markdown(f"### 🌤️ {t('Weather Crop Planner')}", unsafe_allow_html=True)
+        if st.button(t("Open Weather Planner")):
+            st.session_state["selected_page"] = "Weather-Based Crop Planning"
+            st.session_state["navigated_from_card"] = True
+            st.rerun()
 
-    user_input = st.text_input(
-        translate_text("Ask a question", dest_lang),
-        placeholder=translate_text("e.g., Best crop for this season?", dest_lang)
-    )
+    with cols[2]:
+        img = load_image("assests/disease.jpg")
+        if img: st.image(img, use_container_width=True)
+        st.markdown(f"### 🥬 {t('Disease Detection')}", unsafe_allow_html=True)
+        if st.button(t("Open Disease Detection")):
+            st.session_state["selected_page"] = "Disease Detection"
+            st.session_state["navigated_from_card"] = True
+            st.rerun()
 
-    if user_input:
-        with st.spinner(translate_text("Thinking...", dest_lang)):
-            final_response = query_with_retry(user_input, dest_lang)
+    # Second row of cards
+    cols2 = st.columns(3)
 
-        st.success(translate_text("Here's the response:", dest_lang))
-        st.markdown(f"🧠 {translate_text(final_response, dest_lang)}")
+    with cols2[0]:
+        img = load_image("assests/profit.jpg")
+        if img: st.image(img, use_container_width=True)
+        st.markdown(f"### 💰 {t('Profit Calculator')}", unsafe_allow_html=True)
+        if st.button(t("Open Profit Calculator")):
+            st.session_state["selected_page"] = "Profit Calculator"
+            st.session_state["navigated_from_card"] = True
+            st.rerun()
 
-    # Final spacing
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    with cols2[1]:
+        img = load_image("assests/record.jpg")
+        if img: st.image(img, use_container_width=True)
+        st.markdown(f"### 📒 {t('Record Keeping')}", unsafe_allow_html=True)
+        if st.button(t("Open Record Keeping")):
+            st.session_state["selected_page"] = "Farm Record Keeping"
+            st.session_state["navigated_from_card"] = True
+            st.rerun()
+
+    with cols2[2]:
+        img = load_image("assests/assistant.jpg")
+        if img: st.image(img, use_container_width=True)
+        st.markdown(f"### 🎙️ {t('Voice & Text Assistant')}", unsafe_allow_html=True)
+        if st.button(t("Open Assistant")):
+            st.session_state["selected_page"] = "Voice & Text Assistant"
+            st.session_state["navigated_from_card"] = True
+            st.rerun()
