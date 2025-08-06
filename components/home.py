@@ -41,7 +41,7 @@ def show(dest_lang='en'):
         ("Disease Detection", "assests/disease.jpg", "Disease Detection", "🥬"),
         ("Profit Calculator", "assests/profit.jpg", "Profit Calculator", "💰"),
         ("Record Keeping", "assests/record.jpg", "Farm Record Keeping", "📒"),
-        ("Voice & Text Assistant", "assests/assistant.jpg", "Voice & Text Assistant", "🎙️")
+        ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️")
     ]
 
     # Render cards in 2 rows
@@ -50,8 +50,11 @@ def show(dest_lang='en'):
         for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
             with col:
                 img = load_image(img_path)
-                if img:
+                if isinstance(img, Image.Image):
                     st.image(img, use_container_width=True)
+                else:
+                    st.warning(f"⚠️ Unable to display image for: {title}")
+                
                 st.markdown(f"### {icon} {t(title)}", unsafe_allow_html=True)
                 if st.button(t(f"Open {title}")):
                     st.session_state["selected_page"] = page
