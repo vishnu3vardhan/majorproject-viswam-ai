@@ -37,7 +37,7 @@ def show(dest_lang='en'):
             st.error(f"Error loading image from `{path}`: {e}")
             return None
 
-    # ✅ Fixed card image paths: "assests" → "assets"
+    # ✅ Correct image paths
     cards = [
         ("Crop Suggestion", "assets/crop.jpg", "Crop Suggestion", "🌱"),
         ("Weather Crop Planner", "assets/weather.jpg", "Weather-Based Crop Planning", "🌤️"),
@@ -53,11 +53,13 @@ def show(dest_lang='en'):
         for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
             with col:
                 img = load_image(img_path)
+
                 if isinstance(img, Image.Image):
                     st.image(img, use_container_width=True)
                 else:
                     st.warning(f"⚠️ Unable to display image for: {title}")
-                
+                    st.text(f"(Missing image: {img_path})")  # Optional debug line
+
                 st.markdown(f"### {icon} {t(title)}", unsafe_allow_html=True)
                 if st.button(t(f"Open {title}")):
                     st.session_state["selected_page"] = page
