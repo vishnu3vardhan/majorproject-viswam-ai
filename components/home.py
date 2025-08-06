@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import os
-from components.translator import translate_text  # 👈 translation helper
+from components.translator import translate_text  # Translation helper
 
 def show(dest_lang='en'):
     def t(text):
@@ -10,6 +10,7 @@ def show(dest_lang='en'):
         except:
             return text
 
+    # Header
     st.markdown(
         f"""
         <h1 style='text-align: center;'>
@@ -20,9 +21,11 @@ def show(dest_lang='en'):
         unsafe_allow_html=True
     )
 
+    # Card image size
     card_width = 300
     card_height = 200
 
+    # Image loader
     def load_image(path):
         if not os.path.exists(path):
             st.warning(f"⚠️ Image not found: `{path}`")
@@ -41,10 +44,10 @@ def show(dest_lang='en'):
         ("Disease Detection", "assests/disease.jpg", "Disease Detection", "🥬"),
         ("Profit Calculator", "assests/profit.jpg", "Profit Calculator", "💰"),
         ("Record Keeping", "assests/record.jpg", "Farm Record Keeping", "📒"),
-        ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️")
+        ("Voice & Text Assistant", "assests/assistant.jpg", "Voice & Text Assistant", "🎙️")
     ]
 
-    # Render cards in 2 rows
+    # Render cards in 2 rows (3 columns each)
     for i in range(0, len(cards), 3):
         cols = st.columns(3)
         for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
