@@ -10,7 +10,7 @@ def show(dest_lang='en'):
         except:
             return text
 
-    # Header with improved styling
+    # Header
     st.markdown(
         f"""
         <div style='text-align: center; margin-bottom: 30px;'>
@@ -23,28 +23,51 @@ def show(dest_lang='en'):
         unsafe_allow_html=True
     )
 
-    # Card configuration
+    # Card style
+    st.markdown("""
+        <style>
+           
+            .card:hover {
+                transform: scale(1.03);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            }
+            .card-title {
+                font-weight: 600;
+                font-size: 18px;
+                margin-top: 10px;
+            }
+            .stButton > button {
+                background-color: #2e8b57;
+                color: white;
+                font-size: 13px;
+                padding: 4px 10px;
+                border-radius: 6px;
+                margin-top: 8px;
+            }
+            .stButton > button:hover {
+                background-color: #276a46;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
     CARD_WIDTH = 300
     CARD_HEIGHT = 200
+
     PLACEHOLDER_IMAGES = {
-        "crop": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300",
-        "weather": "https://images.unsplash.com/photo-1561484930-974554019ade?w=300",
-        "disease": "https://images.unsplash.com/photo-1604977046806-87b8b1b5b533?w=300",
-        "profit": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300",
-        "record": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300",
-        "assistant": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300"
+        "crop": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300&h=200&fit=crop",
+        "weather": "https://images.unsplash.com/photo-1561484930-974554019ade?w=300&h=200&fit=crop",
+        "disease": "https://images.unsplash.com/photo-1604977046806-87b8b1b5b533?w=300&h=200&fit=crop",
+        "profit": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=200&fit=crop",
+        "record": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=200&fit=crop",
+        "assistant": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&h=200&fit=crop"
     }
 
     def load_image(card_key, path):
         try:
-            # First try local assets
             if os.path.exists(path):
                 img = Image.open(path)
-                img.thumbnail((CARD_WIDTH, CARD_HEIGHT))
+                img = img.resize((CARD_WIDTH, CARD_HEIGHT))
                 return img
-            
-            # Fallback to online placeholder
-            st.warning(f"⚠️ Local image not found, using placeholder: {path}")
             return PLACEHOLDER_IMAGES[card_key.lower().replace(" ", "_").split(".")[0]]
         except Exception as e:
             st.error(f"Error loading image: {str(e)}")
@@ -59,57 +82,34 @@ def show(dest_lang='en'):
         ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️")
     ]
 
-    # Card grid layout
+    # Render cards in 3-column layout
     for i in range(0, len(cards), 3):
         cols = st.columns(3)
         for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
             with col:
-                # Card container with consistent styling
-                with st.container():
+                st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+                img = load_image(title, img_path)
+                if isinstance(img, Image.Image):
+                    st.image(img, width=CARD_WIDTH)
+                elif isinstance(img, str):
+                    st.image(img, width=CARD_WIDTH)
+                else:
                     st.markdown(
-                        f"""
-                        <style>
-                            div[data-testid="stVerticalBlock"] {{
-                                border: 1px solid #e6e6e6;
-                                border-radius: 8px;
-                                padding: 15px;
-                                height: 320px;
-                                transition: all 0.3s ease;
-                            }}
-                            div[data-testid="stVerticalBlock"]:hover {{
-                                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                                transform: translateY(-2px);
-                            }}
-                        </style>
-                        """,
+                        f"<div style='width:{CARD_WIDTH}px; height:{CARD_HEIGHT}px; "
+                        f"display:flex; align-items:center; justify-content:center; background:#f0f2f6;'>"
+                        f"<h1>{icon}</h1></div>",
                         unsafe_allow_html=True
                     )
-                    
-                    # Load image with fallback
-                    img = load_image(title, img_path)
-                    
-                    if isinstance(img, Image.Image):
-                        st.image(img, use_column_width=True)
-                    elif isinstance(img, str):  # URL fallback
-                        st.image(img, use_column_width=True)
-                    else:
-                        st.markdown(
-                            f"<div style='height:{CARD_HEIGHT}px; display:flex; align-items:center; justify-content:center; background:#f0f2f6; border-radius:8px;'>"
-                            f"<h1 style='font-size:3rem;'>{icon}</h1></div>",
-                            unsafe_allow_html=True
-                        )
 
-                    # Card content
-                    st.markdown(f"<h3 style='text-align:center; margin-top:10px;'>{icon} {t(title)}</h3>", unsafe_allow_html=True)
-                    
-                    if st.button(
-                        t(f"Open {title}"), 
-                        use_container_width=True,
-                        key=f"btn_{page.lower().replace(' ', '_')}"
-                    ):
-                        st.session_state["selected_page"] = page
-                        st.session_state["navigated_from_card"] = True
-                        st.rerun()
+                st.markdown(f"<div class='card-title'>{icon} {t(title)}</div>", unsafe_allow_html=True)
 
-    # Add some spacing at the bottom
-    st.markdown("<div style='margin-top: 50px;'></div>", unsafe_allow_html=True)
+                if st.button(
+                    t(f"Open {title}"),
+                    key=f"btn_{page.lower().replace(' ', '_')}"
+                ):
+                    st.session_state["selected_page"] = page
+                    st.session_state["navigated_from_card"] = True
+                    st.rerun()
+
+                st.markdown("</div>", unsafe_allow_html=True)
