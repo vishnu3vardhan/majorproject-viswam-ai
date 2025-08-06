@@ -23,10 +23,10 @@ def show(dest_lang='en'):
         unsafe_allow_html=True
     )
 
-    # Card style
+    # Custom card styling
     st.markdown("""
         <style>
-           
+            
             .card:hover {
                 transform: scale(1.03);
                 box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -82,7 +82,7 @@ def show(dest_lang='en'):
         ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️")
     ]
 
-    # Render cards in 3-column layout
+    # Render 3 cards per row
     for i in range(0, len(cards), 3):
         cols = st.columns(3)
         for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
@@ -104,12 +104,13 @@ def show(dest_lang='en'):
 
                 st.markdown(f"<div class='card-title'>{icon} {t(title)}</div>", unsafe_allow_html=True)
 
-                if st.button(
-                    t(f"Open {title}"),
-                    key=f"btn_{page.lower().replace(' ', '_')}"
-                ):
+                if st.button(t(f"Open {title}"), key=f"btn_{page.lower().replace(' ', '_')}"):
                     st.session_state["selected_page"] = page
                     st.session_state["navigated_from_card"] = True
-                    st.rerun()
 
                 st.markdown("</div>", unsafe_allow_html=True)
+
+    # Safely rerun after layout
+    if st.session_state.get("navigated_from_card"):
+        st.session_state["navigated_from_card"] = False
+        st.rerun()
