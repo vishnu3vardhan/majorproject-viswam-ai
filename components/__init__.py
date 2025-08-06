@@ -1,6 +1,6 @@
 # components/__init__.py
 
-from . import Home
+from . import home
 from . import Assistant
 from . import record_keeping
 from . import disease_detection
