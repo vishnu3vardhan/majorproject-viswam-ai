@@ -37,14 +37,14 @@ def show(dest_lang='en'):
             st.error(f"Error loading image from `{path}`: {e}")
             return None
 
-    # Card data: (label, image_path, target_page, icon)
+    # ✅ Fixed card image paths: "assests" → "assets"
     cards = [
-        ("Crop Suggestion", "assests/crop.jpg", "Crop Suggestion", "🌱"),
-        ("Weather Crop Planner", "assests/weather.jpg", "Weather-Based Crop Planning", "🌤️"),
-        ("Disease Detection", "assests/disease.jpg", "Disease Detection", "🥬"),
-        ("Profit Calculator", "assests/profit.jpg", "Profit Calculator", "💰"),
-        ("Record Keeping", "assests/record.jpg", "Farm Record Keeping", "📒"),
-        ("Voice & Text Assistant", "assests/assistant.jpg", "Voice & Text Assistant", "🎙️")
+        ("Crop Suggestion", "assets/crop.jpg", "Crop Suggestion", "🌱"),
+        ("Weather Crop Planner", "assets/weather.jpg", "Weather-Based Crop Planning", "🌤️"),
+        ("Disease Detection", "assets/disease.jpg", "Disease Detection", "🥬"),
+        ("Profit Calculator", "assets/profit.jpg", "Profit Calculator", "💰"),
+        ("Record Keeping", "assets/record.jpg", "Farm Record Keeping", "📒"),
+        ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️")
     ]
 
     # Render cards in 2 rows (3 columns each)
