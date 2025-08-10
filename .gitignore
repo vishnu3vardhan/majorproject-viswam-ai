@@ -50,3 +50,7 @@ docker-compose.yml
 
 # Environment variable files
 .env
+
+pyproject.toml
+
+uv.lock
