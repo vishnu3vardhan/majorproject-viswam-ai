@@ -1,0 +1,17 @@
+
+protobuf==4.25.3
+
+requests>=2.25
+
+speechrecognition
+deep-translator
+
+plotly
+pocketsphinx
+
+tensorflow==2.13.0
+numpy==1.24.3
+Pillow==9.5.0
+streamlit==1.24.0
+rich>=10.14.0
+
