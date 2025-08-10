@@ -1,0 +1,52 @@
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Streamlit configuration files
+*.log
+*.db
+*.pickle
+
+# IDE/Editor folders and files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+Pipfile.lock
+*.egg-info/
+dist/
+build/
+
+# Pytest cache
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Coverage reports
+*.hypothesis/
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Environment variable files
+.env
