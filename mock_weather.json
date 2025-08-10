@@ -1,0 +1,173 @@
+{
+  "hyderabad": {
+    "list": [
+      {"main": {"temp": 32, "humidity": 52}, "weather": [{"description": "clear sky"}]},
+      {"main": {"temp": 33, "humidity": 50}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 31, "humidity": 54}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 30, "humidity": 55}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 29, "humidity": 58}, "weather": [{"description": "overcast"}]}
+    ]
+  },
+  "warangal": {
+    "list": [
+      {"main": {"temp": 34, "humidity": 60}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 33, "humidity": 62}, "weather": [{"description": "clear sky"}]},
+      {"main": {"temp": 32, "humidity": 64}, "weather": [{"description": "humid"}]},
+      {"main": {"temp": 31, "humidity": 65}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 30, "humidity": 66}, "weather": [{"description": "cloudy"}]}
+    ]
+  },
+  "karimnagar": {
+    "list": [
+      {"main": {"temp": 33, "humidity": 58}, "weather": [{"description": "clear"}]},
+      {"main": {"temp": 32, "humidity": 60}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 31, "humidity": 61}, "weather": [{"description": "hazy"}]},
+      {"main": {"temp": 30, "humidity": 63}, "weather": [{"description": "drizzle"}]},
+      {"main": {"temp": 29, "humidity": 65}, "weather": [{"description": "showers"}]}
+    ]
+  },
+  "nizamabad": {
+    "list": [
+      {"main": {"temp": 31, "humidity": 55}, "weather": [{"description": "clear sky"}]},
+      {"main": {"temp": 32, "humidity": 57}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 30, "humidity": 60}, "weather": [{"description": "humid"}]},
+      {"main": {"temp": 29, "humidity": 62}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 28, "humidity": 63}, "weather": [{"description": "overcast"}]}
+    ]
+  },
+  "nalgonda": {
+    "list": [
+      {"main": {"temp": 35, "humidity": 45}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 34, "humidity": 48}, "weather": [{"description": "dry"}]},
+      {"main": {"temp": 33, "humidity": 50}, "weather": [{"description": "clear"}]},
+      {"main": {"temp": 32, "humidity": 52}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 31, "humidity": 55}, "weather": [{"description": "cloudy"}]}
+    ]
+  },
+  "khammam": {
+    "list": [
+      {"main": {"temp": 29, "humidity": 70}, "weather": [{"description": "humid"}]},
+      {"main": {"temp": 30, "humidity": 72}, "weather": [{"description": "light rain"}]},
+      {"main": {"temp": 31, "humidity": 68}, "weather": [{"description": "overcast"}]},
+      {"main": {"temp": 30, "humidity": 67}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 29, "humidity": 69}, "weather": [{"description": "foggy"}]}
+    ]
+  },
+  "adilabad": {
+    "list": [
+      {"main": {"temp": 27, "humidity": 65}, "weather": [{"description": "fog"}]},
+      {"main": {"temp": 28, "humidity": 67}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 29, "humidity": 69}, "weather": [{"description": "rain"}]},
+      {"main": {"temp": 28, "humidity": 70}, "weather": [{"description": "drizzle"}]},
+      {"main": {"temp": 27, "humidity": 72}, "weather": [{"description": "clear sky"}]}
+    ]
+  },
+  "mahabubnagar": {
+    "list": [
+      {"main": {"temp": 30, "humidity": 58}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 31, "humidity": 56}, "weather": [{"description": "clear"}]},
+      {"main": {"temp": 29, "humidity": 59}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 28, "humidity": 60}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 27, "humidity": 61}, "weather": [{"description": "overcast"}]}
+    ]
+  },
+  "medak": {
+    "list": [
+      {"main": {"temp": 31, "humidity": 60}, "weather": [{"description": "clear sky"}]},
+      {"main": {"temp": 32, "humidity": 59}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 30, "humidity": 62}, "weather": [{"description": "hazy"}]},
+      {"main": {"temp": 29, "humidity": 63}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 28, "humidity": 65}, "weather": [{"description": "humid"}]}
+    ]
+  },
+  "jagtial": {
+    "list": [
+      {"main": {"temp": 30, "humidity": 63}, "weather": [{"description": "fog"}]},
+      {"main": {"temp": 31, "humidity": 64}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 29, "humidity": 66}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 28, "humidity": 68}, "weather": [{"description": "overcast"}]},
+      {"main": {"temp": 27, "humidity": 69}, "weather": [{"description": "rain"}]}
+    ]
+  },
+  "visakhapatnam": {
+    "list": [
+      {"main": {"temp": 30, "humidity": 70}, "weather": [{"description": "humid"}]},
+      {"main": {"temp": 31, "humidity": 68}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 32, "humidity": 66}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 31, "humidity": 67}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 30, "humidity": 69}, "weather": [{"description": "clear"}]}
+    ]
+  },
+  "vijayawada": {
+    "list": [
+      {"main": {"temp": 33, "humidity": 60}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 34, "humidity": 58}, "weather": [{"description": "clear"}]},
+      {"main": {"temp": 32, "humidity": 62}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 31, "humidity": 64}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 30, "humidity": 65}, "weather": [{"description": "humid"}]}
+    ]
+  },
+  "guntur": {
+    "list": [
+      {"main": {"temp": 34, "humidity": 55}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 33, "humidity": 57}, "weather": [{"description": "clear sky"}]},
+      {"main": {"temp": 32, "humidity": 59}, "weather": [{"description": "dry"}]},
+      {"main": {"temp": 31, "humidity": 60}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 30, "humidity": 62}, "weather": [{"description": "cloudy"}]}
+    ]
+  },
+  "nellore": {
+    "list": [
+      {"main": {"temp": 32, "humidity": 72}, "weather": [{"description": "humid"}]},
+      {"main": {"temp": 31, "humidity": 74}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 30, "humidity": 75}, "weather": [{"description": "overcast"}]},
+      {"main": {"temp": 29, "humidity": 76}, "weather": [{"description": "light rain"}]},
+      {"main": {"temp": 28, "humidity": 78}, "weather": [{"description": "rain"}]}
+    ]
+  },
+  "tirupati": {
+    "list": [
+      {"main": {"temp": 31, "humidity": 68}, "weather": [{"description": "clear"}]},
+      {"main": {"temp": 32, "humidity": 66}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 30, "humidity": 70}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 29, "humidity": 72}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 28, "humidity": 73}, "weather": [{"description": "humid"}]}
+    ]
+  },
+  "kadapa": {
+    "list": [
+      {"main": {"temp": 33, "humidity": 58}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 34, "humidity": 56}, "weather": [{"description": "clear"}]},
+      {"main": {"temp": 32, "humidity": 60}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 31, "humidity": 62}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 30, "humidity": 64}, "weather": [{"description": "humid"}]}
+    ]
+  },
+  "ananthapur": {
+    "list": [
+      {"main": {"temp": 35, "humidity": 48}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 36, "humidity": 46}, "weather": [{"description": "clear sky"}]},
+      {"main": {"temp": 34, "humidity": 50}, "weather": [{"description": "dry"}]},
+      {"main": {"temp": 33, "humidity": 52}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 32, "humidity": 54}, "weather": [{"description": "cloudy"}]}
+    ]
+  },
+  "kurnool": {
+    "list": [
+      {"main": {"temp": 34, "humidity": 50}, "weather": [{"description": "sunny"}]},
+      {"main": {"temp": 35, "humidity": 48}, "weather": [{"description": "clear"}]},
+      {"main": {"temp": 33, "humidity": 52}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 32, "humidity": 54}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 31, "humidity": 55}, "weather": [{"description": "humid"}]}
+    ]
+  },
+  "srikakulam": {
+    "list": [
+      {"main": {"temp": 30, "humidity": 74}, "weather": [{"description": "humid"}]},
+      {"main": {"temp": 31, "humidity": 72}, "weather": [{"description": "cloudy"}]},
+      {"main": {"temp": 29, "humidity": 75}, "weather": [{"description": "partly cloudy"}]},
+      {"main": {"temp": 28, "humidity": 76}, "weather": [{"description": "overcast"}]},
+      {"main": {"temp": 27, "humidity": 78}, "weather": [{"description": "rain"}]}
+    ]
+  }
+ }
