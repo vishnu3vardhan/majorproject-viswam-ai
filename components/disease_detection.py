@@ -35,7 +35,7 @@ def show(dest_lang='en'):
         st.markdown("<p style='text-align: center; color: gray;'>"
                     f"{translate_text('Preview of the uploaded image', dest_lang)}"
                     "</p>", unsafe_allow_html=True)
-        st.image(uploaded_file, use_container_width=True)
+        st.image(uploaded_file, width=600)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
