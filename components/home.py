@@ -10,48 +10,79 @@ def show(dest_lang='en'):
         except:
             return text
 
+    # Initialize session state for navigation control
+    if "home_initialized" not in st.session_state:
+        st.session_state.home_initialized = True
+        st.session_state.navigated_from_card = False
+        st.session_state.last_navigation = None
+
     # Header
     st.markdown(
         f"""
-        <div style='text-align: center; margin-bottom: 30px;'>
-            <h1 style='display: inline-flex; align-items: center; gap: 10px;'>
-                <img src='https://img.icons8.com/emoji/48/seedling.png' width='35'/>
-                {t("Welcome to")} <span style='color: #2e8b57;'>Farmin-A.I Assistant</span>
+        <div style='text-align: center; margin-bottom: 40px;'>
+            <h1 style='display: inline-flex; align-items: center; gap: 10px; color: #2e8b57;'>
+                🌾 {t("Welcome to Farmin-A.I Assistant")}
             </h1>
+            <p style='color: #666; font-size: 18px; margin-top: 10px;'>
+                {t("Your Intelligent Farming Companion")}
+            </p>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    # Custom card styling
+    # Clean card styling without white boxes
     st.markdown("""
         <style>
-            
-            .card:hover {
-                transform: scale(1.03);
-                box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            }
-            .card-title {
-                font-weight: 600;
-                font-size: 18px;
-                margin-top: 10px;
-            }
-            .stButton > button {
-                background-color: #2e8b57;
-                color: white;
-                font-size: 13px;
-                padding: 4px 10px;
-                border-radius: 6px;
-                margin-top: 8px;
-            }
-            .stButton > button:hover {
-                background-color: #276a46;
-            }
+        .feature-card {
+            padding: 0;
+            border-radius: 15px;
+            background: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .card-image {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            font-weight: 600;
+            font-size: 20px;
+            color: #2e8b57;
+            margin-bottom: 15px;
+        }
+        .card-button {
+            background: linear-gradient(45deg, #2e8b57, #3cb371) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 25px !important;
+            padding: 12px 25px !important;
+            font-weight: 500 !important;
+            font-size: 14px !important;
+            transition: all 0.3s ease !important;
+            width: auto !important;
+            margin: 0 auto !important;
+            display: block !important;
+        }
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 139, 87, 0.3) !important;
+        }
+        .card-content {
+            padding: 0;
+            background: transparent;
+        }
         </style>
     """, unsafe_allow_html=True)
 
-    CARD_WIDTH = 300
-    CARD_HEIGHT = 200
+    CARD_WIDTH = 280
+    CARD_HEIGHT = 180
 
     PLACEHOLDER_IMAGES = {
         "crop": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300&h=200&fit=crop",
@@ -70,25 +101,33 @@ def show(dest_lang='en'):
                 return img
             return PLACEHOLDER_IMAGES[card_key.lower().replace(" ", "_").split(".")[0]]
         except Exception as e:
-            st.error(f"Error loading image: {str(e)}")
-            return None
+            return PLACEHOLDER_IMAGES.get("crop", "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300&h=200&fit=crop")
 
     cards = [
         ("Crop Suggestion", "assets/crop.jpg", "Crop Suggestion", "🌱"),
         ("Weather Crop Planner", "assets/weather.jpg", "Weather-Based Crop Planning", "🌤️"),
-        ("Disease Detection", "assets/disease.jpg", "Disease Detection", "🥬"),
+        ("Disease Detection", "assets/disease.jpg", "Disease Detection", "🔍"),
         ("Profit Calculator", "assets/profit.jpg", "Profit Calculator", "💰"),
         ("Record Keeping", "assets/record.jpg", "Farm Record Keeping", "📒"),
         ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️")
     ]
+
+    # Track if any button was clicked in this run
+    button_clicked = False
+    clicked_page = None
 
     # Render 3 cards per row
     for i in range(0, len(cards), 3):
         cols = st.columns(3)
         for col, (title, img_path, page, icon) in zip(cols, cards[i:i+3]):
             with col:
-                st.markdown("<div class='card'>", unsafe_allow_html=True)
-
+                # Card container
+                st.markdown(f"""
+                    <div class='feature-card'>
+                        <div class='card-image'>
+                """, unsafe_allow_html=True)
+                
+                # Image
                 img = load_image(title, img_path)
                 if isinstance(img, Image.Image):
                     st.image(img, width=CARD_WIDTH)
@@ -97,20 +136,34 @@ def show(dest_lang='en'):
                 else:
                     st.markdown(
                         f"<div style='width:{CARD_WIDTH}px; height:{CARD_HEIGHT}px; "
-                        f"display:flex; align-items:center; justify-content:center; background:#f0f2f6;'>"
-                        f"<h1>{icon}</h1></div>",
+                        f"display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #f0f8ff, #e0f7fa); "
+                        f"border-radius: 15px;'>"
+                        f"<h1 style='font-size: 48px;'>{icon}</h1></div>",
                         unsafe_allow_html=True
                     )
+                
+                # Title and button
+                st.markdown(f"""
+                    </div>
+                    <div class='card-content'>
+                        <div class='card-title'>{icon} {t(title)}</div>
+                    </div>
+                """, unsafe_allow_html=True)
+                
+                # Button with unique key
+                if st.button(t(f"Open {title}"), key=f"home_btn_{page.lower().replace(' ', '_')}"):
+                    button_clicked = True
+                    clicked_page = page
 
-                st.markdown(f"<div class='card-title'>{icon} {t(title)}</div>", unsafe_allow_html=True)
+    # Handle navigation after all buttons are rendered
+    if button_clicked and clicked_page:
+        # Only navigate if it's a different page than the last navigation
+        if st.session_state.last_navigation != clicked_page:
+            st.session_state.selected_page = clicked_page
+            st.session_state.navigated_from_card = True
+            st.session_state.last_navigation = clicked_page
+            st.experimental_rerun()
 
-                if st.button(t(f"Open {title}"), key=f"btn_{page.lower().replace(' ', '_')}"):
-                    st.session_state["selected_page"] = page
-                    st.session_state["navigated_from_card"] = True
-
-                st.markdown("</div>", unsafe_allow_html=True)
-
-    # Safely rerun after layout
-    if st.session_state.get("navigated_from_card"):
-        st.session_state["navigated_from_card"] = False
-        st.rerun()
+    # Reset navigation flag if we're already on the target page
+    elif st.session_state.navigated_from_card:
+        st.session_state.navigated_from_card = False

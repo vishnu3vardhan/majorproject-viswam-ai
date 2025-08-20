@@ -1,7 +1,7 @@
 import requests
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "gemma3:270m"  # Or "mistral", "gemma", etc.
+MODEL_NAME = "deepseek-r1:1.5b"
 
 def get_ai_response(prompt, lang_code="en"):
     # Optional: Language hinting

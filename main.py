@@ -13,6 +13,14 @@ from components.translator import translate_text
 # Page Config
 st.set_page_config(page_title="Farmin-A.I Assistant", page_icon="assests/favicon.png", layout="wide")
 
+# Initialize session state for navigation
+if "selected_page" not in st.session_state:
+    st.session_state["selected_page"] = "Home"
+if "navigated_from_card" not in st.session_state:
+    st.session_state["navigated_from_card"] = False
+if "last_lang" not in st.session_state:
+    st.session_state["last_lang"] = "en"
+
 # ---- Sidebar Styling ----
 with st.sidebar:
     st.image("assets/logo.png", width=180)
@@ -41,21 +49,23 @@ pages = [
 ]
 translated_labels = [t(p) for p in pages]
 
-# ---- Initialize Session State ----
-if "selected_page" not in st.session_state:
-    st.session_state["selected_page"] = "Home"
-
 # ---- Sidebar Navigation ----
 selected_label = st.sidebar.radio("📌 " + t("Go to"), translated_labels)
 selected_page_from_sidebar = pages[translated_labels.index(selected_label)]
 
+# Handle language change rerun only when language actually changes
+if st.session_state["last_lang"] != dest_lang:
+    st.session_state["last_lang"] = dest_lang
+    st.session_state["selected_page"] = selected_page_from_sidebar
+    st.rerun()
+
 # Sidebar changes should override card clicks
-if "navigated_from_card" not in st.session_state:
+if not st.session_state["navigated_from_card"]:
     st.session_state["selected_page"] = selected_page_from_sidebar
 
-# Remove card navigation flag after routing
-if "navigated_from_card" in st.session_state:
-    del st.session_state["navigated_from_card"]
+# Reset card navigation flag after use
+if st.session_state["navigated_from_card"]:
+    st.session_state["navigated_from_card"] = False
 
 # ---- Page Routing ----
 with st.spinner(t("Loading...")):
