@@ -43,7 +43,7 @@ if "last_lang" not in st.session_state:
 
 # ---- Sidebar Styling ----
 with st.sidebar:
-    st.image("assets/logo.png", width=180)
+    st.image("assets/favicon.png", width=200)
     
     # Language toggle
     lang = st.selectbox("🌐 Choose Language", ["English", "తెలుగు"])
@@ -75,7 +75,10 @@ if FEEDBACK_AVAILABLE:
 translated_labels = [t(p) for p in pages]
 
 # ---- Sidebar Navigation ----
-selected_label = st.sidebar.radio("📌 " + t("Go to"), translated_labels)
+# Get the current index based on selected_page to keep radio button in sync
+current_index = pages.index(st.session_state["selected_page"]) if st.session_state["selected_page"] in pages else 0
+
+selected_label = st.sidebar.radio("📌 " + t("Go to"), translated_labels, index=current_index, key="sidebar_nav")
 selected_page_from_sidebar = pages[translated_labels.index(selected_label)]
 
 # Handle language change rerun only when language actually changes
@@ -111,8 +114,6 @@ with st.spinner(t("Loading...")):
         record_keeping.show(dest_lang)
     elif current_page == "Feedback" and FEEDBACK_AVAILABLE:
         feedback_page.feedback_page(dest_lang)  # Call the function from the module
-
-
 
 # ---- Footer ----
 st.markdown("---")

@@ -8,6 +8,6 @@ keras==2.12.0
 tensorflow==2.12.0
 numpy>=1.22,<1.24
 Pillow==9.5.0
-streamlit==1.25.0
+streamlit==1.27.0
 rich>=10.14.0
 

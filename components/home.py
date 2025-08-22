@@ -15,7 +15,6 @@ def show(dest_lang='en'):
     if "home_initialized" not in st.session_state:
         st.session_state.home_initialized = True
         st.session_state.navigated_from_card = False
-        st.session_state.last_navigation = None
 
     # Header
     st.markdown(
@@ -40,8 +39,7 @@ def show(dest_lang='en'):
                 help="Provide feedback about the application"):
         st.session_state.selected_page = "Feedback"
         st.session_state.navigated_from_card = True
-        st.experimental_rerun()
-
+        st.rerun()
 
     # Clean card styling without white boxes
     st.markdown("""
@@ -164,18 +162,13 @@ def show(dest_lang='en'):
                     </div>
                 """, unsafe_allow_html=True)
                 
-                # Button with unique key - now with Messenger style
+                # Button with unique key
                 if st.button(t(f"Open {title}"), key=f"home_btn_{page.lower().replace(' ', '_')}"):
                     button_clicked = True
                     clicked_page = page
 
     # Handle navigation after all buttons are rendered
     if button_clicked and clicked_page:
-        if st.session_state.last_navigation != clicked_page:
-            st.session_state.selected_page = clicked_page
-            st.session_state.navigated_from_card = True
-            st.session_state.last_navigation = clicked_page
-            st.rerun()
-
-    elif st.session_state.navigated_from_card:
-        st.session_state.navigated_from_card = False
+        st.session_state.selected_page = clicked_page
+        st.session_state.navigated_from_card = True
+        st.rerun()
