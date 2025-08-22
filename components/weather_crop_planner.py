@@ -1,8 +1,19 @@
 import streamlit as st
 import json
 from components.translator import translate_text
+from components.feedback_button import feedback_button  # Add this import
+
 
 def show(dest_lang='en'):
+    def t(text):
+        try:
+            return translate_text(text, dest_lang)
+        except:
+            return text
+
+    # Add the feedback button at the top
+    feedback_button("Weather-Based Crop Planning")
+   
     # Stylized title
     st.markdown(
         f"""

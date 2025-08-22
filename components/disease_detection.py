@@ -1,13 +1,23 @@
 import streamlit as st
 from detection import predict_disease
 from components.translator import translate_text
+from components.feedback_button import feedback_button  # Import the feedback component
 
 def show(dest_lang='en'):
+    def t(text):
+        try:
+            return translate_text(text, dest_lang)
+        except:
+            return text
+
+    # Add the feedback button at the top
+    feedback_button("disease_detection")
+    
     st.markdown(
         f"""
         <div style='text-align: center; padding-bottom: 10px;'>
-            <h2 style='color:#6A1B9A;'>{translate_text("🧫 Disease Detection System", dest_lang)}</h2>
-            <p style='color: gray;'>{translate_text("Upload an image of a crop, cow, or poultry to detect possible diseases.", dest_lang)}</p>
+            <h2 style='color:#6A1B9A;'>{t("🧫 Disease Detection System")}</h2>
+            <p style='color: gray;'>{t("Upload an image of a crop, cow, or poultry to detect possible diseases.")}</p>
         </div>
         """,
         unsafe_allow_html=True
@@ -17,41 +27,41 @@ def show(dest_lang='en'):
 
     # Detection Type
     detection_type = st.selectbox(
-        translate_text("🧬 Select Detection Type", dest_lang),
+        t("🧬 Select Detection Type"),
         [
-            translate_text("Crop", dest_lang),
-            translate_text("Cow", dest_lang),
-            translate_text("Poultry", dest_lang)
+            t("Crop"),
+            t("Cow"),
+            t("Poultry")
         ]
     )
 
     uploaded_file = st.file_uploader(
-        translate_text("📷 Upload an image", dest_lang),
+        t("📷 Upload an image"),
         type=["jpg", "jpeg", "png"]
     )
 
     # Preview uploaded image
     if uploaded_file:
         st.markdown("<p style='text-align: center; color: gray;'>"
-                    f"{translate_text('Preview of the uploaded image', dest_lang)}"
+                    f"{t('Preview of the uploaded image')}"
                     "</p>", unsafe_allow_html=True)
         st.image(uploaded_file, width=600)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Prediction trigger
-    if uploaded_file and st.button(translate_text("🔍 Predict Disease", dest_lang), use_container_width=True):
+    if uploaded_file and st.button(t("🔍 Predict Disease"), use_container_width=True):
         type_map = {
-            translate_text("Crop", dest_lang): "crop",
-            translate_text("Cow", dest_lang): "cow",
-            translate_text("Poultry", dest_lang): "poultry"
+            t("Crop"): "crop",
+            t("Cow"): "cow",
+            t("Poultry"): "poultry"
         }
         model_type = type_map.get(detection_type, "crop")
 
-        with st.spinner(translate_text("Analyzing image...", dest_lang)):
+        with st.spinner(t("Analyzing image...")):
             result = predict_disease(uploaded_file, model_type=model_type)
 
-        st.success(f"🧪 {translate_text('Prediction for', dest_lang)} {detection_type}: **{translate_text(result, dest_lang)}**")
+        st.success(f"🧪 {t('Prediction for')} {detection_type}: **{t(result)}**")
 
     # Footer spacing
     st.markdown("<br><br>", unsafe_allow_html=True)

@@ -3,6 +3,7 @@ from PIL import Image
 import os
 from components.translator import translate_text
 
+
 def show(dest_lang='en'):
     def t(text):
         try:
@@ -30,6 +31,17 @@ def show(dest_lang='en'):
         """,
         unsafe_allow_html=True
     )
+    
+    # Create columns to position the feedback button at the top-right
+    col1, col2, col3 = st.columns([3, 1, 1])
+    
+    with col3:
+     if st.button("💬 Feedback", key="feedback_btn_home", 
+                help="Provide feedback about the application"):
+        st.session_state.selected_page = "Feedback"
+        st.session_state.navigated_from_card = True
+        st.rerun()
+
 
     # Clean card styling without white boxes
     st.markdown("""
@@ -58,10 +70,9 @@ def show(dest_lang='en'):
             margin-bottom: 15px;
         }
         .card-button {
-            background: linear-gradient(45deg, #2e8b57, #3cb371) !important;
+            background: #0084ff !important; /* Messenger Blue */
             color: white !important;
             border: none !important;
-            border-radius: 25px !important;
             padding: 12px 25px !important;
             font-weight: 500 !important;
             font-size: 14px !important;
@@ -69,10 +80,13 @@ def show(dest_lang='en'):
             width: auto !important;
             margin: 0 auto !important;
             display: block !important;
+            border-radius: 20px 20px 20px 5px !important; /* Messenger bubble shape */
+            box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3) !important;
         }
         .card-button:hover {
+            background: #0066cc !important; /* Darker blue on hover */
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(46, 139, 87, 0.3) !important;
+            box-shadow: 0 6px 16px rgba(0, 132, 255, 0.4) !important;
         }
         .card-content {
             padding: 0;
@@ -87,10 +101,10 @@ def show(dest_lang='en'):
     PLACEHOLDER_IMAGES = {
         "crop": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300&h=200&fit=crop",
         "weather": "https://images.unsplash.com/photo-1561484930-974554019ade?w=300&h=200&fit=crop",
-        "disease": "https://images.unsplash.com/photo-1604977046806-87b8b1b5b533?w=300&h=200&fit=crop",
+        "disease": "https://images.unsplash.com/photo-1604977046806-87b1b5b533?w=300&h=200&fit=crop",
         "profit": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=200&fit=crop",
         "record": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=200&fit=crop",
-        "assistant": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&h=200&fit=crop"
+        "assistant": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&h=200&fit=crop",
     }
 
     def load_image(card_key, path):
@@ -109,7 +123,7 @@ def show(dest_lang='en'):
         ("Disease Detection", "assets/disease.jpg", "Disease Detection", "🔍"),
         ("Profit Calculator", "assets/profit.jpg", "Profit Calculator", "💰"),
         ("Record Keeping", "assets/record.jpg", "Farm Record Keeping", "📒"),
-        ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️")
+        ("Voice & Text Assistant", "assets/assistant.jpg", "Voice & Text Assistant", "🎙️"),
     ]
 
     # Track if any button was clicked in this run
@@ -150,20 +164,18 @@ def show(dest_lang='en'):
                     </div>
                 """, unsafe_allow_html=True)
                 
-                # Button with unique key
+                # Button with unique key - now with Messenger style
                 if st.button(t(f"Open {title}"), key=f"home_btn_{page.lower().replace(' ', '_')}"):
                     button_clicked = True
                     clicked_page = page
 
     # Handle navigation after all buttons are rendered
     if button_clicked and clicked_page:
-        # Only navigate if it's a different page than the last navigation
         if st.session_state.last_navigation != clicked_page:
             st.session_state.selected_page = clicked_page
             st.session_state.navigated_from_card = True
             st.session_state.last_navigation = clicked_page
-            st.experimental_rerun()
+            st.rerun()
 
-    # Reset navigation flag if we're already on the target page
     elif st.session_state.navigated_from_card:
         st.session_state.navigated_from_card = False

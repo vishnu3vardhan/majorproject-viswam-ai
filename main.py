@@ -1,14 +1,34 @@
 import streamlit as st
-from components import (
-    home,
-    Assistant,
-    record_keeping,
-    disease_detection,
-    weather_crop_planner,
-    profit_calculator,
-    crop_suggestion
-)
 from components.translator import translate_text
+
+# Import individual components directly instead of through __init__
+import components.home as home
+import components.Assistant as Assistant
+import components.record_keeping as record_keeping
+import components.disease_detection as disease_detection
+import components.weather_crop_planner as weather_crop_planner
+import components.profit_calculator as profit_calculator
+import components.crop_suggestion as crop_suggestion
+
+# Import feedback components with fallback
+try:
+    import components.feedback_page as feedback_page
+    import components.feedback_button as feedback_button
+    FEEDBACK_AVAILABLE = True
+except ImportError:
+    FEEDBACK_AVAILABLE = False
+    # Create fallback functions if feedback components are not available
+    def feedback_page(dest_lang='en'):
+        def t(text):
+            try:
+                return translate_text(text, dest_lang)
+            except:
+                return text
+        st.title(t("Feedback"))
+        st.info(t("Feedback feature is currently unavailable. Please check if all components are properly installed."))
+    
+    def feedback_button(dest_lang='en'):
+        pass  # Do nothing if feedback button is not available
 
 # Page Config
 st.set_page_config(page_title="Farmin-A.I Assistant", page_icon="assests/favicon.png", layout="wide")
@@ -47,6 +67,11 @@ pages = [
     "Profit Calculator",
     "Farm Record Keeping"
 ]
+
+# Add Feedback page to navigation if available
+if FEEDBACK_AVAILABLE:
+    pages.append("Feedback")
+
 translated_labels = [t(p) for p in pages]
 
 # ---- Sidebar Navigation ----
@@ -84,6 +109,10 @@ with st.spinner(t("Loading...")):
         profit_calculator.show(dest_lang)
     elif current_page == "Farm Record Keeping":
         record_keeping.show(dest_lang)
+    elif current_page == "Feedback" and FEEDBACK_AVAILABLE:
+        feedback_page.feedback_page(dest_lang)  # Call the function from the module
+
+
 
 # ---- Footer ----
 st.markdown("---")

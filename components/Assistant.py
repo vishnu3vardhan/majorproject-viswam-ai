@@ -3,6 +3,7 @@ import time
 from ollama_backend import get_ai_response
 from voice_assistant import listen_to_voice
 from components.translator import translate_text
+from components.feedback_button import feedback_button  # Import the feedback component
 
 
 # --- Helper: Format conversational history for prompt ---
@@ -18,20 +19,24 @@ def format_conversational_prompt(messages, system_prompt):
     return formatted_prompt
 
 
-
-
 # --- Helper: Retry wrapper ---
 def query_with_retry(prompt: str, dest_lang="en", retries=3) -> str:
+    def t(text):
+        try:
+            return translate_text(text, dest_lang)
+        except:
+            return text
+            
     system_prompt = (
-    "You are FarminAi, a helpful and friendly AI assistant for farmers. "
-    "Provide clear, practical, and localized advice on farming-related topics such as crops, soil health, weather, irrigation, "
-    "pest and disease management, government schemes, and market prices. "
-    "Your responses should be brief, easy to understand, and relevant to the farmer's local conditions whenever possible. "
-    "Use simple language, avoid jargon, and always aim to be kind, respectful, and accurate. "
-    "If the user's question lacks detail, ask clarifying questions to provide better help. "
-    "If you don't know something, say so honestly rather than guessing."
-    "Adapt your responses based on regional practices, climate, and crops when such context is available."
-)
+        "You are FarminAi, a helpful and friendly AI assistant for farmers. "
+        "Provide clear, practical, and localized advice on farming-related topics such as crops, soil health, weather, irrigation, "
+        "pest and disease management, government schemes, and market prices. "
+        "Your responses should be brief, easy to understand, and relevant to the farmer's local conditions whenever possible. "
+        "Use simple language, avoid jargon, and always aim to be kind, respectful, and accurate. "
+        "If the user's question lacks detail, ask clarifying questions to provide better help. "
+        "If you don't know something, say so honestly rather than guessing."
+        "Adapt your responses based on regional practices, climate, and crops when such context is available."
+    )
 
     for attempt in range(retries):
         try:
@@ -55,25 +60,34 @@ def query_with_retry(prompt: str, dest_lang="en", retries=3) -> str:
 
                 # Append assistant response to history
                 st.session_state.messages.append({"role": "assistant", "content": cleaned})
-                return cleaned or translate_text("Sorry, I couldn't understand your question.", dest_lang)
+                return cleaned or t("Sorry, I couldn't understand your question.")
             else:
-                return translate_text("❌ Error: Unable to fetch response. Please try again.", dest_lang)
+                return t("❌ Error: Unable to fetch response. Please try again.")
 
         except Exception as e:
             if attempt < retries - 1:
                 time.sleep(2)
             else:
-                return translate_text(f"❌ Error: Failed after multiple attempts. {e}", dest_lang)
+                return t(f"❌ Error: Failed after multiple attempts. {e}")
 
 
 # --- MAIN PAGE FUNCTION ---
 def show(dest_lang='en'):
+    def t(text):
+        try:
+            return translate_text(text, dest_lang)
+        except:
+            return text
+
+    # Add the feedback button at the top
+    feedback_button("voice_assistant")
+    
     # Stylized header
     st.markdown(
         f"""
         <div style='text-align: center; padding-bottom: 10px;'>
-            <h2 style='color:#2E7D32;'>{translate_text("🌾 Your Smart Assistant for Agriculture", dest_lang)}</h2>
-            <p style='color: gray;'>{translate_text("Ask using voice or text to get instant help.", dest_lang)}</p>
+            <h2 style='color:#2E7D32;'>{t("🌾 Your Smart Assistant for Agriculture")}</h2>
+            <p style='color: gray;'>{t("Ask using voice or text to get instant help.")}</p>
         </div>
         """,
         unsafe_allow_html=True
@@ -81,37 +95,37 @@ def show(dest_lang='en'):
 
     st.markdown("---")
 
-    # 🎙️ Voice Assistant (Unchanged)
-    st.markdown(f"### 🎙️ {translate_text('Voice Assistant', dest_lang)}")
+    # 🎙️ Voice Assistant
+    st.markdown(f"### 🎙️ {t('Voice Assistant')}")
     st.markdown(
-        f"<p style='color: gray;'>{translate_text('Click the mic and ask your farming question.', dest_lang)}</p>",
+        f"<p style='color: gray;'>{t('Click the mic and ask your farming question.')}</p>",
         unsafe_allow_html=True
     )
 
-    mic_clicked = st.button(translate_text("🎤 Start Speaking", dest_lang))
+    mic_clicked = st.button(t("🎤 Start Speaking"))
 
     if mic_clicked:
         try:
             query = listen_to_voice()
             if query:
-                with st.spinner(translate_text("Processing your voice...", dest_lang)):
+                with st.spinner(t("Processing your voice...")):
                     response = get_ai_response(query, dest_lang)
                     if response:
-                        st.success(translate_text("Here's the response:", dest_lang))
-                        st.markdown(f"🧠 {translate_text(response, dest_lang)}")
+                        st.success(t("Here's the response:"))
+                        st.markdown(f"🧠 {t(response)}")
                     else:
-                        st.error(translate_text("Sorry, I couldn't understand that.", dest_lang))
+                        st.error(t("Sorry, I couldn't understand that."))
             else:
-                st.warning(translate_text("No voice detected. Please try again.", dest_lang))
+                st.warning(t("No voice detected. Please try again."))
         except Exception:
-            st.error(translate_text("Voice assistant failed to start.", dest_lang))
+            st.error(t("Voice assistant failed to start."))
 
     st.markdown("---")
 
-    # ⌨️ Text Assistant (Updated logic only)
-    st.markdown(f"### ⌨️ {translate_text('Text Assistant', dest_lang)}")
+    # ⌨️ Text Assistant
+    st.markdown(f"### ⌨️ {t('Text Assistant')}")
     st.markdown(
-        f"<p style='color: gray;'>{translate_text('Type your question below.', dest_lang)}</p>",
+        f"<p style='color: gray;'>{t('Type your question below.')}</p>",
         unsafe_allow_html=True
     )
 
@@ -120,16 +134,16 @@ def show(dest_lang='en'):
         st.session_state.messages = []
 
     user_input = st.text_input(
-        translate_text("Ask a question", dest_lang),
-        placeholder=translate_text("e.g., Best crop for this season?", dest_lang)
+        t("Ask a question"),
+        placeholder=t("e.g., Best crop for this season?")
     )
 
     if user_input:
-        with st.spinner(translate_text("Thinking...", dest_lang)):
+        with st.spinner(t("Thinking...")):
             final_response = query_with_retry(user_input, dest_lang)
 
-        st.success(translate_text("Here's the response:", dest_lang))
-        st.markdown(f"🧠 {translate_text(final_response, dest_lang)}")
+        st.success(t("Here's the response:"))
+        st.markdown(f"🧠 {t(final_response)}")
 
     # Final spacing
     st.markdown("<br><br>", unsafe_allow_html=True)

@@ -1,13 +1,23 @@
 import streamlit as st
 import json
 from components.translator import translate_text
+from components.feedback_button import feedback_button  # Import the feedback component
 
 def show(dest_lang='en'):
+    def t(text):
+        try:
+            return translate_text(text, dest_lang)
+        except:
+            return text
+
+    # Add the feedback button at the top
+    feedback_button("crop_suggestion")
+    
     st.markdown(
         f"""
         <div style='text-align: center; padding-bottom: 10px;'>
-            <h2 style='color:#2E7D32;'>{translate_text("🌿 Crop Suggestion Based on Season", dest_lang)}</h2>
-            <p style='color: gray;'>{translate_text("Enter the season to get crop suggestions that match weather, soil, and duration.", dest_lang)}</p>
+            <h2 style='color:#2E7D32;'>{t("🌿 Crop Suggestion Based on Season")}</h2>
+            <p style='color: gray;'>{t("Enter the season to get crop suggestions that match weather, soil, and duration.")}</p>
         </div>
         """,
         unsafe_allow_html=True
@@ -19,12 +29,12 @@ def show(dest_lang='en'):
         with open("data/crop_data.json", "r", encoding="utf-8") as f:
             crop_data = json.load(f)
     except FileNotFoundError:
-        st.error(translate_text("❌ 'crop_data.json' not found in 'data/' folder.", dest_lang))
+        st.error(t("❌ 'crop_data.json' not found in 'data/' folder."))
         return
 
     season_input = st.text_input(
-        translate_text("Enter Season (e.g. Summer, Winter, Monsoon)", dest_lang),
-        placeholder=translate_text("Type a season...", dest_lang)
+        t("Enter Season (e.g. Summer, Winter, Monsoon)"),
+        placeholder=t("Type a season...")
     )
 
     if season_input:
@@ -35,7 +45,7 @@ def show(dest_lang='en'):
 
         if matching_crops:
             st.success(
-                f"✅ {translate_text('Found', dest_lang)} {len(matching_crops)} {translate_text('crop(s) for the season', dest_lang)}: {season_input.title()}"
+                f"✅ {t('Found')} {len(matching_crops)} {t('crop(s) for the season')}: {season_input.title()}"
             )
             st.markdown("")
 
@@ -44,15 +54,15 @@ def show(dest_lang='en'):
                 st.markdown(
                     f"""
                     <div style="border: 1px solid #444; padding: 15px; border-radius: 10px; background-color: #1e1e1e; color: #f0f0f0; margin-bottom: 20px;">
-                        <h4 style="color: #81c784;">🌾 {translate_text(crop['crop'], dest_lang)}</h4>
+                        <h4 style="color: #81c784;">🌾 {t(crop['crop'])}</h4>
                         <ul style="padding-left: 20px; line-height: 1.6;">
-                            <li><strong>{translate_text("Season", dest_lang)}:</strong> {translate_text(crop['season'], dest_lang)}</li>
-                            <li><strong>{translate_text("Weather Condition", dest_lang)}:</strong> {translate_text(crop['weather'], dest_lang)}</li>
-                            <li><strong>{translate_text("Soil Type", dest_lang)}:</strong> {translate_text(crop['soil'], dest_lang)}</li>
-                            <li><strong>{translate_text("Duration", dest_lang)}:</strong> {translate_text(crop['duration'], dest_lang)}</li>
-                            <li><strong>{translate_text("Investment", dest_lang)}:</strong> {translate_text(crop['investment'], dest_lang)}</li>
-                            <li><strong>{translate_text("Expected Profit", dest_lang)}:</strong> {translate_text(crop['profit'], dest_lang)}</li>
-                            <li><strong>{translate_text("How to Start", dest_lang)}:</strong> {translate_text(crop['how_to_start'], dest_lang)}</li>
+                            <li><strong>{t("Season")}:</strong> {t(crop['season'])}</li>
+                            <li><strong>{t("Weather Condition")}:</strong> {t(crop['weather'])}</li>
+                            <li><strong>{t("Soil Type")}:</strong> {t(crop['soil'])}</li>
+                            <li><strong>{t("Duration")}:</strong> {t(crop['duration'])}</li>
+                            <li><strong>{t("Investment")}:</strong> {t(crop['investment'])}</li>
+                            <li><strong>{t("Expected Profit")}:</strong> {t(crop['profit'])}</li>
+                            <li><strong>{t("How to Start")}:</strong> {t(crop['how_to_start'])}</li>
                         </ul>
                     </div>
                     """,
@@ -68,16 +78,16 @@ def show(dest_lang='en'):
 
             best_crop = max(matching_crops, key=lambda crop: extract_profit(crop['profit']))
 
-            st.markdown("### 🥇 " + translate_text("Best Crop to Cultivate Among These", dest_lang))
+            st.markdown("### 🥇 " + t("Best Crop to Cultivate Among These"))
             st.success(
-                f"🌱 **{translate_text(best_crop['crop'], dest_lang)}** - {translate_text('has the highest expected profit among the suggested crops.', dest_lang)}"
+                f"🌱 **{t(best_crop['crop'])}** - {t('has the highest expected profit among the suggested crops.')}"
             )
 
         else:
             st.warning(
-                f"⚠ {translate_text('No crop suggestions found for season', dest_lang)}: {season_input.title()}"
+                f"⚠ {t('No crop suggestions found for season')}: {season_input.title()}"
             )
     else:
-        st.info(translate_text("Please enter a season to get crop suggestions.", dest_lang))
+        st.info(t("Please enter a season to get crop suggestions."))
 
     st.markdown("<br>", unsafe_allow_html=True)
