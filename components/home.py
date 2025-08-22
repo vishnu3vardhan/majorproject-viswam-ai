@@ -40,7 +40,7 @@ def show(dest_lang='en'):
                 help="Provide feedback about the application"):
         st.session_state.selected_page = "Feedback"
         st.session_state.navigated_from_card = True
-        st.rerun()
+        st.experimental_rerun()
 
 
     # Clean card styling without white boxes
