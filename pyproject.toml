@@ -1,49 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "team-project-farmin-ai"
 version = "0.1.0"
 description = "A smart farming assistant"
+requires-python = ">=3.10"
 authors = [
-    { name = "Vishnu Vardhan", email = "vishnuvardhancv128@gmail.com" }
+  { name = "Your Name", email = "you@example.com" }
+]
+maintainers = [
+  { name = "Your Maintainer Name", email = "maintainer@example.com" }
 ]
 readme = "README.md"
-license = { file = "LICENSE" }
-requires-python = ">=3.10"
-
-dependencies = [
-    "requests-oauthlib",
-    "rich",
-    "rpds-py",
-    "rsa",
-    "setuptools",
-    "six",
-    "smmap",
-    "sounddevice",
-    "soupsieve",
-    "speechrecognition",
-    "streamlit",
-    "tenacity",
-    "tensorboard",
-    "tensorboard-data-server",
-    "tensorflow",
-    "tensorflow-estimator",
-    "tensorflow-intel",
-    "tensorflow-io-gcs-filesystem",
-    "termcolor",
-    "toml",
-    "toolz",
-    "tornado",
-    "typing-extensions",
-    "tzdata",
-    "tzlocal",
-    "urllib3",
-    "validators",
-    "watchdog",
-    "werkzeug",
-    "wheel",
-    "wrapt",
-    "zipp"
+license = "AGPL-3.0"
+license-files = ["LICEN[CS]E.*"]
+keywords = ["farming", "ai", "streamlit", "agriculture"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GNU Affero General Public License v3"
 ]
 
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+dependencies = [
+  "requests-oauthlib",
+  "rich",
+  "rpds-py",
+  "rsa",
+  "setuptools",
+  "six",
+  "smmap",
+  "sounddevice",
+  "soupsieve",
+  "speechrecognition",
+  "streamlit",
+  "tenacity",
+  "tensorboard",
+  "tensorboard-data-server",
+  "tensorflow",
+  "tensorflow-estimator",
+  "tensorflow-intel",
+  "tensorflow-io-gcs-filesystem",
+  "termcolor",
+  "toml",
+  "toolz",
+  "tornado",
+  "typing-extensions",
+  "tzdata",
+  "tzlocal",
+  "urllib3",
+  "validators",
+  "watchdog",
+  "werkzeug",
+  "wheel",
+  "wrapt",
+  "zipp"
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "black"]
+cli = ["rich", "click"]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/team-project-farmin-ai"
+Repository = "https://github.com/yourusername/team-project-farmin-ai.git"
+"Bug Tracker" = "https://github.com/yourusername/team-project-farmin-ai/issues"
+Changelog = "https://github.com/yourusername/team-project-farmin-ai/blob/main/CHANGELOG.md"
+
+[project.scripts]
+farmin-cli = "farmin:main"
+
+[project.gui-scripts]
+farmin-gui = "farmin:main_gui"
