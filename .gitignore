@@ -50,3 +50,6 @@ docker-compose.yml
 # Environment variable files
 .env
 
+# --- Compliance required files (always keep tracked) ---
+!pyproject.toml
+!uv.lock
