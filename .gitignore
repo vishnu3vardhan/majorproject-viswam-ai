@@ -20,7 +20,6 @@ venv.bak/
 *.pickle
 
 # IDE/Editor folders and files
-.vscode/
 .idea/
 *.swp
 *.swo
