@@ -19,9 +19,8 @@ keywords = ["farming", "ai", "streamlit", "agriculture"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3",
-  "Framework :: Streamlit",
-  "License :: OSI Approved :: GNU Affero General Public License v3",
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
 ]
 
 # Core dependencies
@@ -29,7 +28,7 @@ dependencies = [
   "streamlit",
   "speechrecognition",
   "sounddevice",
-  "tensorflow",  # includes tensorflow-intel & tensorflow-io-gcs-filesystem depending on platform
+  "tensorflow",
   "tensorboard",
   "requests-oauthlib",
   "validators",
@@ -59,3 +58,6 @@ farmin-cli = "farmin:main"
 
 [project.gui-scripts]
 farmin-gui = "farmin:main_gui"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/farmin"]
