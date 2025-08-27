@@ -1,21 +1,55 @@
-# Python
+# Python bytecode files
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-*.egg-info/
-.env
-.venv/
+
+# Virtual environment
 venv/
+env/
+.venv/
 ENV/
+env.bak/
+venv.bak/
 
-# Streamlit
-.streamlit/
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
 
-# VS Code local settings (we keep .vscode folder, but ignore local history)
-.vscode/.ropeproject/
-.history/
+# Streamlit configuration files
+*.log
+*.db
+*.pickle
 
-# OS
+# IDE/Editor folders and files
+.idea/
+*.swp
+*.swo
+
+# System files
 .DS_Store
 Thumbs.db
+
+# Dependencies
+Pipfile.lock
+*.egg-info/
+dist/
+build/
+
+# Pytest cache
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Coverage reports
+*.hypothesis/
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Environment variable files
+.env
+
+# --- Compliance required files (always keep tracked) ---
+!pyproject.toml
+!uv.lock
