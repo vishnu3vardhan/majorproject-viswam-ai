@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: farmin-ai
+Version: 0.1.0
+Summary: Smart farming assistant using Streamlit
+Author: C V VISHNU VARDHAN CHARY
+License-File: LICENSE
+Requires-Dist: streamlit>=1.30.0
+Requires-Dist: googletrans==4.0.0rc1
+Requires-Dist: Pillow
+Dynamic: license-file

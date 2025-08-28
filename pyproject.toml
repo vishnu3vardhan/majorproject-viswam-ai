@@ -1,17 +1,13 @@
 [project]
-name = "farmin-ai-assistant"
+name = "farmin-ai"
 version = "0.1.0"
-description = "A multilingual smart farming assistant built with Streamlit."
-authors = [{ name = "C V VISHNU VARDHAN CHARY", email = "vishnuvardhancv128@gmail.com" }]
+description = "Smart farming assistant using Streamlit"
+authors = [{ name = "C V VISHNU VARDHAN CHARY" }]
 dependencies = [
-    "streamlit>=1.30.0",              # Adjust version as needed
-    "googletrans==4.0.0rc1",          # Assuming you're using this for `translate_text`
-    "Pillow",                         # For image handling (used by Streamlit)
+    "streamlit>=1.30.0",
+    "googletrans==4.0.0rc1",
+    "Pillow"
 ]
 
-# Optional: for development or testing purposes
-[project.optional-dependencies]
-dev = ["pytest", "black", "isort"]
-
 [tool.setuptools.packages.find]
-where = ["."]
+include = ["components"]  # Only include your Python package
